@@ -1,2 +1,3 @@
-# 1819v-LI41N-G11
-Repositório do grupo G11
+Enunciados dos trabalhos de AVE no semestre de verão 2018/19
+
+* [Trabalho 1 - entrega **29 de Março**](trabalho1.md)
