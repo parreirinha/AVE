@@ -7,9 +7,9 @@ namespace Csvier
 {
     public class CsvParser
     {
-        Type type;
-        char separator;
-        Dictionary<string, int> ctorArgs = new Dictionary<string, int>();
+        private Type type;
+        private char separator;
+        private Dictionary<string, int> ctorArgs = new Dictionary<string, int>();
 
         public CsvParser(Type klass, char separator)
         {
@@ -23,7 +23,6 @@ namespace Csvier
         public CsvParser CtorArg(string arg, int col)
         {
             //Part 1
-
             ctorArgs.Add(arg, col);
             return this;
         }
@@ -70,9 +69,26 @@ namespace Csvier
         }
         public object[] Parse()
         {
+            ConstructorInfo[] ci = type.GetConstructors();
+            Object[] ctorParams = GetConstructorParams(ci);
+            if (ctorParams == null)
+                throw new Exception("there is no constructor that matches de pameters identified in CtorArgs method");
+
+            object created = Activator.CreateInstance(type, ctorParams);
+
+
             //Part 1
             throw new NotImplementedException();
         }
 
+        /*
+         * get object[] for Activator
+         * if values don't match with ctor params returns null
+         **/
+        private object[] GetConstructorParams(ConstructorInfo[] ci)
+        {
+            // será necessáriovalidar o tipo de valores dos parametros para os iniciar
+            throw new NotImplementedException();
+        }
     }
 }
