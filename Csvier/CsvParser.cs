@@ -7,8 +7,14 @@ namespace Csvier
 {
     public class CsvParser
     {
+        Type type;
+        char separator;
+        Dictionary<string, int> ctorArgs = new Dictionary<string, int>();
+
         public CsvParser(Type klass, char separator)
         {
+            type = klass;
+            this.separator = separator;
         }
         public CsvParser(Type klass) : this(klass, ',')
         {
@@ -16,6 +22,9 @@ namespace Csvier
 
         public CsvParser CtorArg(string arg, int col)
         {
+            //Part 1
+
+            ctorArgs.Add(arg, col);
             return this;
         }
 
@@ -31,6 +40,8 @@ namespace Csvier
 
         public CsvParser Load(String src)
         {
+            //Part 1
+
             string[] arr = src.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             return this;
         }
@@ -59,6 +70,7 @@ namespace Csvier
         }
         public object[] Parse()
         {
+            //Part 1
             throw new NotImplementedException();
         }
 
