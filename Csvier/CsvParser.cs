@@ -9,12 +9,14 @@ namespace Csvier
     {
         private Type type;
         private char separator;
-        private Dictionary<string, int> ctorArgs = new Dictionary<string, int>();
+        private ParserHandler parser;
+
 
         public CsvParser(Type klass, char separator)
         {
             type = klass;
             this.separator = separator;
+            parser = new ParserHandler(type);
         }
         public CsvParser(Type klass) : this(klass, ',')
         {
@@ -23,17 +25,20 @@ namespace Csvier
         public CsvParser CtorArg(string arg, int col)
         {
             //Part 1
-            ctorArgs.Add(arg, col);
+            parser.AddCtorParam(arg, col);
+
             return this;
         }
 
         public CsvParser PropArg(string arg, int col)
         {
+            parser.AddProp(arg, col);
             return this;
         }
 
         public CsvParser FieldArg(string arg, int col)
         {
+            parser.AddField(arg, col);
             return this;
         }
 

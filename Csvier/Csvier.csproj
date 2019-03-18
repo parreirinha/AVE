@@ -42,14 +42,15 @@
   <ItemGroup>
     <Compile Include="Abstract\IParser.cs" />
     <Compile Include="CsvParser.cs" />
-    <Compile Include="Abstract\ICtorParser.cs" />
+    <Compile Include="CtorManager.cs" />
+    <Compile Include="ParserHandler.cs" />
+    <Compile Include="Parsers\FieldParser.cs" />
+    <Compile Include="Parsers\PropertyParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Parsers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Csvier.Abstract
+namespace Csvier.Exceptions
 {
-    interface ICtorParser
+    class CtorException
     {
     }
 }
