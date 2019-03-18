@@ -21,11 +21,23 @@ namespace Csvier.Test
 
 
         [TestMethod]
-        public void GetParametersForCtor()
+        public void GetParametersForCtorTest()
         {
             Assert.AreEqual(true, false);
         }
 
-        
+
+        [TestMethod]
+        public void CtorHasParamTest()
+        {
+            Assert.AreEqual(true, false);
+        }
+
+        [TestMethod]
+        public void AddCtorParameter()
+        {
+            Assert.AreEqual(true, false);
+        }
+
     }
 }
