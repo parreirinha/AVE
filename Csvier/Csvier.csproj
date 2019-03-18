@@ -43,6 +43,9 @@
     <Compile Include="Abstract\IParser.cs" />
     <Compile Include="CsvParser.cs" />
     <Compile Include="CtorManager.cs" />
+    <Compile Include="Exceptions\CtorException.cs" />
+    <Compile Include="Exceptions\FieldException.cs" />
+    <Compile Include="Exceptions\PropertyException.cs" />
     <Compile Include="ParserHandler.cs" />
     <Compile Include="Parsers\FieldParser.cs" />
     <Compile Include="Parsers\PropertyParser.cs" />

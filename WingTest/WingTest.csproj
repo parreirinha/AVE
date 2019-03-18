@@ -55,7 +55,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Part1Test.cs" />
+    <Compile Include="CtorManagerTest.cs" />
+    <Compile Include="Parsers\FieldParserTest.cs" />
+    <Compile Include="Parsers\PropertyParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

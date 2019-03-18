@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Csvier.Exceptions
 {
-    class CtorException
+    class CtorException : Exception
     {
+        public CtorException(string message) : base(message)
+        {
+        }
+
     }
 }
