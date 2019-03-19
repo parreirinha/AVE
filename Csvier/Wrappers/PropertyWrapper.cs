@@ -20,5 +20,15 @@ namespace Csvier.Wrappers
             this.pp = pp;
             this.pbi = pbi;
         }
+
+        public void AddParser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetValue(string name, string[] lineData, int col, object target)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
