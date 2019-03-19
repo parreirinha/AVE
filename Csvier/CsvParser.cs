@@ -10,7 +10,7 @@ namespace Csvier
         private Type type;
         private char separator;
         private ParserHandler parser;
-
+        private string[] data;
 
         public CsvParser(Type klass, char separator)
         {
@@ -43,6 +43,7 @@ namespace Csvier
         public CsvParser Load(String src)
         {
             string[] arr = src.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            data = arr;
             return this;
         }
 
@@ -70,26 +71,7 @@ namespace Csvier
         }
         public object[] Parse()
         {
-            ConstructorInfo[] ci = type.GetConstructors();
-            Object[] ctorParams = GetConstructorParams(ci);
-            if (ctorParams == null)
-                throw new Exception("there is no constructor that matches de pameters identified in CtorArgs method");
-
-            object created = Activator.CreateInstance(type, ctorParams);
-
-
-            //Part 1
-            throw new NotImplementedException();
-        }
-
-        /*
-         * get object[] for Activator
-         * if values don't match with ctor params returns null
-         **/
-        private object[] GetConstructorParams(ConstructorInfo[] ci)
-        {
-            // será necessáriovalidar o tipo de valores dos parametros para os iniciar
-            throw new NotImplementedException();
+            return parser.GetObjects(data);
         }
     }
 }

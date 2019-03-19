@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DE857858-8828-4BAC-9C05-C5D38A5F3D05}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Csvier</RootNamespace>
-    <AssemblyName>Csvier</AssemblyName>
+    <ProjectGuid>{A4B9E9F4-0AD5-489C-9254-98DD4321CE6A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TestApp</RootNamespace>
+    <AssemblyName>TestApp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,21 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IParser.cs" />
-    <Compile Include="CsvParser.cs" />
-    <Compile Include="CtorManager.cs" />
-    <Compile Include="Exceptions\CtorException.cs" />
-    <Compile Include="Exceptions\FieldException.cs" />
-    <Compile Include="Exceptions\PropertyException.cs" />
-    <Compile Include="ParserHandler.cs" />
-    <Compile Include="Parsers\FieldParser.cs" />
-    <Compile Include="Parsers\PropertyParser.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunTestClass.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Clima\Clima.csproj">
+      <Project>{EDB6B12D-1A1B-4C9C-A14F-6084F742D4C3}</Project>
+      <Name>Clima</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Csvier\Csvier.csproj">
+      <Project>{DE857858-8828-4BAC-9C05-C5D38A5F3D05}</Project>
+      <Name>Csvier</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

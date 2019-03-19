@@ -14,6 +14,7 @@ namespace Csvier
         private Type type;
         private Dictionary<String, int> ctorParams;
         private ConstructorInfo[] ci;
+        private string[] data;
 
         public CtorManager(Type type)
         {
@@ -22,20 +23,16 @@ namespace Csvier
             ci = type.GetConstructors();
         }
 
-        public object BuildInstance(string[] data)
+        public void AddCtorParameter(string paramName, int col)
         {
-            object[] parameters = GetParametersForCtor();
-            object retValue = Activator.CreateInstance(type, parameters);
-            return retValue;
+            ctorParams.Add(paramName, col);
         }
 
-        private object[] GetParametersForCtor()
+        public bool constainsParameter(string name)
         {
-            ConstructorInfo currCtor = FindCtor();
-
-
-            throw new NotImplementedException();
+            return ctorParams.ContainsKey(name);
         }
+
 
         private ConstructorInfo FindCtor()
         {  
@@ -52,7 +49,7 @@ namespace Csvier
                 bool find = true;
                 foreach (KeyValuePair<string, int> pair in ctorParams)
                 {
-                    if (pair.Key.Equals(currCtorInfo.Name))
+                    if(Array.Exists(pi, p => p.Name == pair.Key))
                         continue;
                     find = false;
                 }
@@ -63,27 +60,70 @@ namespace Csvier
             throw new CtorException($"arguments inserted in CtorArgs aren't compatible with object of type {type.Name}");
         }
 
-        public void AddCtorParameter(string paramName, int col)
+        /*
+         * retorna
+         * */
+        public object[] CreateObjectArrayData(string[] data)
         {
-            if (!CtorHasParam(paramName))
-                throw new CtorException($"Invalid parameter exception for ctor of class {type.Name}");
-            ctorParams.Add(paramName, col);
-        }
+            if (data == null || data.Length == 0)
+                throw new Exception("there are no data to populate the object");
 
-        private bool CtorHasParam(string paramName)
-        {
-            //Array.Exists
-            bool exists = false;
-            foreach(ConstructorInfo cInfo in ci)
+            object[] res = new object[data.Length];
+
+            for(int i=0; i<data.Length; i++)
             {
-                ParameterInfo[] pi = cInfo.GetParameters();
-                exists = Array.Exists<ParameterInfo>(pi, elem => elem.Name == paramName);
-                if (exists)
-                    return true;
+                res[i] = BuildInstance(data[i]);
             }
-            return exists;
+            return res;
+        }
+
+        /**
+         *  Build a new object from a single line
+         *  data is a single line of the csv file
+         ***/
+        private object BuildInstance(string data)
+        {
+            string[] values = data.Split(',');
+
+            object[] parameters = GetParametersForCtor(data); //TODO
+            object retValue = Activator.CreateInstance(type, parameters);
+            return retValue;
         }
 
 
+        //TODO
+        /**
+         * retorna um array de objectos com os valores finais para passar ao Activator.CreateInstance
+         * */
+        private object[] GetParametersForCtor(string data)
+        {
+            ConstructorInfo currCtor = FindCtor();
+            ParameterInfo[] pi = currCtor.GetParameters();
+            ParameterInfo currParam;
+            object[] parameters = new object[ctorParams.Count];
+
+            int idx = 0;
+            string[] values = data.Split(',');
+            foreach(KeyValuePair<string, int> pair in ctorParams)
+            {
+                currParam = pi[idx];
+                Type paramType = currParam.ParameterType;
+                parameters[idx++] = GetParameterParsed(pair.Key, values[pair.Value], paramType);
+            }
+            return parameters;
+        }
+
+        private object GetParameterParsed(string paramName, string data, Type paramType)
+        {
+            //ci.GetParameters()
+            BindingFlags bi = BindingFlags.Instance | BindingFlags.Public;
+            MethodInfo mi = paramType.GetMethod("Parse", new Type[] { typeof(string) });
+            object val = mi.Invoke(paramType, new object[] {data });
+
+
+            //object parameter = Activator.CreateInstance(paramType, new object[] { val });
+
+            return val;
+        }
     }
 }

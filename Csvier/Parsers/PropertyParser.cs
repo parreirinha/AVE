@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,12 @@ namespace Csvier.Parsers
         }
 
         public void SetValue(string[] lineData, int col, object target)
+        {
+            PropertyInfo propertyInfo = type.GetProperty(name);
+            propertyInfo.SetValue(target, GetValue(propertyInfo, lineData[col]));
+        }
+
+        private object GetValue(PropertyInfo propertyInfo, string data)
         {
             throw new NotImplementedException();
         }

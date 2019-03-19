@@ -9,6 +9,7 @@ namespace Csvier.Test
     [TestClass]
     public class ClimaTest
     {
+        
         [TestMethod]
         public void TestLoadSearchOporto()
         {
@@ -35,5 +36,7 @@ namespace Csvier.Test
                 // Console.WriteLine(String.Join("\n", infos));
             }
         }
+
+    
     }
 }
