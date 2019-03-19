@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Csvier.Abstract
 {
-    interface IParser
+    interface IWrapper
     {
-        void SetValue(string name, string[] lineData, int col, object target);
+        void AddParser();
 
-        //void Add(string paramName, int col);
+        void SetValue(string name, string[] lineData, int col, object target);
     }
 }

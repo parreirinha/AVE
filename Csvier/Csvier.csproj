@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IParser.cs" />
+    <Compile Include="Abstract\IWrapper.cs" />
+    <Compile Include="Cache\ParserCache.cs" />
     <Compile Include="CsvParser.cs" />
     <Compile Include="CtorManager.cs" />
     <Compile Include="Exceptions\CtorException.cs" />
@@ -48,9 +50,11 @@
     <Compile Include="Exceptions\PropertyException.cs" />
     <Compile Include="ParserHandler.cs" />
     <Compile Include="Parsers\FieldParser.cs" />
+    <Compile Include="Parsers\ParserBasicInfo.cs" />
     <Compile Include="Parsers\PropertyParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunTestClass.cs" />
+    <Compile Include="Wrappers\FieldWrapper.cs" />
+    <Compile Include="Wrappers\PropertyWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

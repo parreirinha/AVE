@@ -59,7 +59,8 @@
     <Compile Include="CtorManagerTest.cs" />
     <Compile Include="Parsers\FieldParserTest.cs" />
     <Compile Include="Parsers\PropertyParserTest.cs" />
-    <Compile Include="RemovesPart2.cs" />
+    <Compile Include="Part2Removes.cs" />
+    <Compile Include="Part2Parse.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

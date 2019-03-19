@@ -11,20 +11,13 @@ namespace Csvier.Parsers
     class PropertyParser : IParser
     {
         Type type;
-        private string name;
-        private int col;
-        private char separator;
-        //private Dictionary<string, int> dictionary = new Dictionary<string, int>();
 
-        public PropertyParser(Type type, string name, int col, char sep)
+        public PropertyParser(Type type)
         {
             this.type = type;
-            this.name = name;
-            this.col = col;
-            separator = sep;
         }
 
-        public void SetValue(string[] lineData, int col, object target)
+        public void SetValue(string name, string[] lineData, int col, object target)
         {
             PropertyInfo propertyInfo = type.GetProperty(name);
             propertyInfo.SetValue(target, GetValue(propertyInfo, lineData[col]));
@@ -35,10 +28,5 @@ namespace Csvier.Parsers
             throw new NotImplementedException();
         }
 
-        /*public void Add(string paramName, int col)
-        {
-            // adicionar uma validação => ver se existe a propriedade em type
-            dictionary.Add(paramName, col);
-        }*/
     }
 }

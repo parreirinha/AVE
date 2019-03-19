@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Csvier.Test
 {
     [TestClass]
-    public class RemovesPart2
+    public class Part2Removes
     {
         string sample1, sample2, sample3, sample4;
 

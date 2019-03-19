@@ -62,7 +62,7 @@ namespace Csvier
             if(!Array.Exists(pi, p => p.Name == name))
                 throw new PropertyException($"No such property found in {type.Name}");
 
-            parsers.Add(name, new PropertyParser(type, name, col, separator));
+            parsers.Add(name, new PropertyParser(type));
         }
 
         public void AddField(string name, int col)
@@ -72,7 +72,7 @@ namespace Csvier
             if (!Array.Exists(fi, f => f.Name == name))
                 throw new FieldException($"No such field found in {type.Name}");
 
-            parsers.Add(name, new FieldParser(type, name, col, separator));
+            parsers.Add(name, new FieldParser(type));
         }
 
         public object[] GetObjects(string[] data)
