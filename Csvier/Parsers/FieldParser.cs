@@ -13,13 +13,15 @@ namespace Csvier.Parsers
         private Type type;
         private string name;
         private int col;
+        private char separator;
         //private Dictionary<string, int> dictionary = new Dictionary<string, int>();
 
-        public FieldParser(Type type, string name, int col)
+        public FieldParser(Type type, string name, int col, char sep)
         {
             this.type = type;
             this.name = name;
             this.col = col;
+            separator = sep;
         }
 
         public void SetValue(string[] lineData, int col, object target)

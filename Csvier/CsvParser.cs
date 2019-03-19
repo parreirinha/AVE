@@ -16,7 +16,7 @@ namespace Csvier
         {
             type = klass;
             this.separator = separator;
-            parser = new ParserHandler(type);
+            parser = new ParserHandler(type, separator);
         }
         public CsvParser(Type klass) : this(klass, ',')
         {
