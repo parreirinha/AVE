@@ -10,11 +10,15 @@ namespace Csvier.Parsers
     class FieldParser : IParser
     {
         private Type type;
-        private Dictionary<string, int> dictionary = new Dictionary<string, int>();
+        private string name;
+        private int col;
+        //private Dictionary<string, int> dictionary = new Dictionary<string, int>();
 
-        public FieldParser(Type type)
+        public FieldParser(Type type, string name, int col)
         {
             this.type = type;
+            this.name = name;
+            this.col = col;
         }
 
         public void SetValue(string[] lineData, int col, object target)
@@ -22,9 +26,9 @@ namespace Csvier.Parsers
             throw new NotImplementedException();
         }
 
-        public void Add(string paramName, int col)
+        /*public void Add(string paramName, int col)
         {
             dictionary.Add(paramName, col);
-        }
+        }*/
     }
 }

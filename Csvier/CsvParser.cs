@@ -24,9 +24,7 @@ namespace Csvier
 
         public CsvParser CtorArg(string arg, int col)
         {
-            //Part 1
             parser.AddCtorParam(arg, col);
-
             return this;
         }
 
@@ -44,8 +42,6 @@ namespace Csvier
 
         public CsvParser Load(String src)
         {
-            //Part 1
-
             string[] arr = src.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             return this;
         }

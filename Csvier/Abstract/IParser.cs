@@ -10,6 +10,6 @@ namespace Csvier.Abstract
     {
         void SetValue(string[] lineData, int col, object target);
 
-        void Add(string paramName, int col);
+        //void Add(string paramName, int col);
     }
 }

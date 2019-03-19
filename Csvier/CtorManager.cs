@@ -12,12 +12,13 @@ namespace Csvier
     {
 
         private Type type;
-        private Dictionary<String, int> ctorParams = new Dictionary<string, int>();
+        private Dictionary<String, int> ctorParams;
         private ConstructorInfo[] ci;
 
         public CtorManager(Type type)
         {
             this.type = type;
+            ctorParams = new Dictionary<string, int>();
             ci = type.GetConstructors();
         }
 
@@ -37,8 +38,7 @@ namespace Csvier
         }
 
         private ConstructorInfo FindCtor()
-        {
-            
+        {  
             foreach (ConstructorInfo currCtorInfo in ci)
             {
                 ParameterInfo[] pi = currCtorInfo.GetParameters();
@@ -60,13 +60,13 @@ namespace Csvier
                 if (find)
                     return currCtorInfo;
             }
-            throw new CtorException("argumens inserted in CtorArgs aren't compatible with object of type " + type.Name);
+            throw new CtorException($"arguments inserted in CtorArgs aren't compatible with object of type {type.Name}");
         }
 
         public void AddCtorParameter(string paramName, int col)
         {
             if (!CtorHasParam(paramName))
-                throw new CtorException("Invalid parameter exception for ctor of class " + type.Name);
+                throw new CtorException($"Invalid parameter exception for ctor of class {type.Name}");
             ctorParams.Add(paramName, col);
         }
 
