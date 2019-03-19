@@ -10,7 +10,6 @@ namespace Csvier
 {
     class CtorManager
     {
-
         private Type type;
         private Dictionary<String, int> ctorParams;
         private ConstructorInfo[] ci;
@@ -115,13 +114,9 @@ namespace Csvier
 
         private object GetParameterParsed(string paramName, string data, Type paramType)
         {
-            //ci.GetParameters()
             BindingFlags bi = BindingFlags.Instance | BindingFlags.Public;
             MethodInfo mi = paramType.GetMethod("Parse", new Type[] { typeof(string) });
             object val = mi.Invoke(paramType, new object[] {data });
-
-
-            //object parameter = Activator.CreateInstance(paramType, new object[] { val });
 
             return val;
         }

@@ -49,29 +49,38 @@ namespace Csvier
 
         public CsvParser Remove(int count)
         {
+            data = data.Skip(count).ToArray();
             return this;
         }
 
         public CsvParser RemoveEmpties()
         {
+            data = data.Where(item => item != "").ToArray();
             return this;
         }
         
         public CsvParser RemoveWith(string word)
         {
+            data = data.Where(item => !item.Contains(word)).ToArray();
             return this;
         }
         public CsvParser RemoveEvenIndexes()
         {
+            data = data.Where((item, index) => index % 2 != 0).ToArray();
             return this;
         }
         public CsvParser RemoveOddIndexes()
         {
+            data = data.Where((item, index) => index % 2 == 0).ToArray();
             return this;
         }
         public object[] Parse()
         {
-            return parser.GetObjects(data);
+            object[] weathers= parser.GetObjects(data);
+
+            parser.PopulateFieldAndProperties(weathers);
+
+            return weathers;
         }
     }
 }

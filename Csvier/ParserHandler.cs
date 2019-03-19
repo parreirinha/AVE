@@ -80,5 +80,12 @@ namespace Csvier
             return ctorManager.CreateObjectArrayData(data); 
         }
 
+        /**
+         * */
+        public void PopulateFieldAndProperties(object[] src)
+        {
+            //throw new NotImplementedException();
+        }
+
     }
 }
