@@ -1,6 +1,8 @@
 ﻿using Csvier.Abstract;
 using Csvier.Exceptions;
 using Csvier.Parsers;
+using Csvier.Reflect;
+using Csvier.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,8 @@ namespace Csvier
     {
         private Type type;
         CtorManager ctorManager;
-        Dictionary<String, IParser> parsers;
+        Dictionary<Type, IReflection> reflectors;
+        Dictionary<string, IParserWrapper> parsers;
         PropertyInfo[] pi;
         FieldInfo[] fi;
         ConstructorInfo[] ci;
@@ -24,7 +27,8 @@ namespace Csvier
         {
             this.type = type;
             ctorManager = new CtorManager(type);
-            parsers = new Dictionary<string, IParser>();
+            reflectors = new Dictionary<Type, IReflection>();
+            parsers = new Dictionary<string, IParserWrapper>();
             pi = type.GetProperties();
             fi = type.GetFields();
             ci = type.GetConstructors();
@@ -62,7 +66,27 @@ namespace Csvier
             if(!Array.Exists(pi, p => p.Name == name))
                 throw new PropertyException($"No such property found in {type.Name}");
 
-            parsers.Add(name, new PropertyParser(type));
+            CsvBasicInfo bInfo = new CsvBasicInfo(name, col, separator);
+            PropertyInfo pInfo = type.GetProperty(name);        
+            Type propType = pInfo.GetType();                                   // prop Type
+            PropertyWrapper pw;
+            IReflection reflect;
+
+            if (reflectors.TryGetValue(propType,  out reflect))
+            {
+                pw = new PropertyWrapper((PropertyReflect)reflect, bInfo);
+                parsers.Add(name, pw);
+            }
+            else
+            {
+                PropertyReflect pr = new PropertyReflect(propType);
+                reflectors.Add(propType, pr);
+                pw = new PropertyWrapper(pr, bInfo);
+                parsers.Add(name, pw);
+            }
+            
+
+            //parsers.Add(name, new PropertyReflect(type));
         }
 
         public void AddField(string name, int col)
@@ -72,7 +96,24 @@ namespace Csvier
             if (!Array.Exists(fi, f => f.Name == name))
                 throw new FieldException($"No such field found in {type.Name}");
 
-            parsers.Add(name, new FieldParser(type));
+            CsvBasicInfo bInfo = new CsvBasicInfo(name, col, separator);
+            FieldInfo fInfo = type.GetField(name);
+            Type fieldType = fInfo.GetType();                                   // prop Type
+            FieldWrapper fw;
+            IReflection reflect;
+
+            if (reflectors.TryGetValue(fieldType, out reflect))
+            {
+                fw = new FieldWrapper((FieldReflect)reflect, bInfo);
+                parsers.Add(name, fw);
+            }
+            else
+            {
+                FieldReflect fr = new FieldReflect(fieldType);
+                reflectors.Add(fieldType, fr);
+                fw = new FieldWrapper(fr, bInfo);
+                parsers.Add(name, fw);
+            }
         }
 
         public object[] GetObjects(string[] data)

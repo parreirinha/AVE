@@ -6,13 +6,13 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Csvier.Parsers
+namespace Csvier.Reflect
 {
-    class PropertyParser : IParser
+    class PropertyReflect : IReflection
     {
         Type type;
 
-        public PropertyParser(Type type)
+        public PropertyReflect(Type type)
         {
             this.type = type;
         }

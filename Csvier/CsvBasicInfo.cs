@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Csvier.Parsers
 {
-    public class ParserBasicInfo
+    public class CsvBasicInfo
     {
-        public ParserBasicInfo(string name, int column, char separator)
+        public CsvBasicInfo(string name, int column, char separator)
         {
             Name = name;
             Column = column;

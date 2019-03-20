@@ -9,6 +9,6 @@ namespace Csvier.Cache
 {
     public static class ParserCache
     {
-        public static Dictionary<Type, IParser> parser = new Dictionary<Type, IParser>();
+        static Dictionary<Type, IReflection> parser = new Dictionary<Type, IReflection>();
     }
 }

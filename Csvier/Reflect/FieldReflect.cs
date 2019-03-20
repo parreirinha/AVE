@@ -1,18 +1,14 @@
 ﻿using Csvier.Abstract;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Csvier.Parsers
+namespace Csvier.Reflect
 {
-    class FieldParser : IParser
+    class FieldReflect : IReflection
     {
         private Type type;
 
-        public FieldParser(Type type)
+        public FieldReflect(Type type)
         {
             this.type = type;
         }

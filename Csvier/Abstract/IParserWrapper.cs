@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Csvier.Abstract
 {
-    interface IParser
+    interface IParserWrapper
     {
         void SetValue(string name, string[] lineData, int col, object target);
-
-        //void Add(string paramName, int col);
     }
 }
