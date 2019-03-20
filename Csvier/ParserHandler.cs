@@ -122,10 +122,20 @@ namespace Csvier
         }
 
         /**
+         * this method will set all properties and fields values in src object with the values of data
          * */
-        public void PopulateFieldAndProperties(object[] src)
+        public void SetFieldAndPropertiesValues(object src, string data)
         {
-            //throw new NotImplementedException();
+
+            foreach(KeyValuePair<string, IParserWrapper> pw in parsers)
+            {
+                IParserWrapper parser = pw.Value;
+                string name = pw.Key;
+                CsvBasicInfo bInfo = parser.GetBasicInfo();
+                string[] arrayData = data.Split(bInfo.Separator);
+
+                parser.SetValue(name, arrayData, src);
+            }
         }
 
     }

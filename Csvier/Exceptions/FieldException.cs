@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csvier.Exceptions
 {
-    class FieldException : Exception
+    public class FieldException : Exception
     {
         public FieldException(string message) : base(message)
         {

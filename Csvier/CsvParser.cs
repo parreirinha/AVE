@@ -78,7 +78,8 @@ namespace Csvier
         {
             object[] weathers= parser.GetObjects(data);
 
-            parser.PopulateFieldAndProperties(weathers);
+            for (int i = 0; i < weathers.Length; i++)
+                parser.SetFieldAndPropertiesValues(weathers[i], data[i]);
 
             return weathers;
         }

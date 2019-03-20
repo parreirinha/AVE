@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csvier.Exceptions
 {
-    class PropertyException : Exception
+    public class PropertyException : Exception
     {
         public PropertyException(string message) : base(message)
         {

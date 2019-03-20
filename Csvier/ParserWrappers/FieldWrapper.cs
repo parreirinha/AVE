@@ -17,9 +17,16 @@ namespace Csvier.Wrappers
             this.csvInfo = csvInfo;
         }
 
-        public void SetValue(string name, string[] lineData, int col, object target)
+        public CsvBasicInfo GetBasicInfo()
         {
-            throw new NotImplementedException();
+            return csvInfo;
         }
+
+        public void SetValue(string name, string[] lineData, object target)
+        {
+            fReflect.SetValue(csvInfo.Name, lineData[csvInfo.Column], target);
+        }
+
+
     }
 }

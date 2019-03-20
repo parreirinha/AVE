@@ -13,15 +13,16 @@ namespace Csvier.Reflect
             this.type = type;
         }
 
-        public void SetValue(string name, string[] lineData, int col, object target)
+        public void SetValue(string name, string data, object target)
         {
             FieldInfo fieldInfo = type.GetField(name);
-            fieldInfo.SetValue(target, GetValue(fieldInfo, lineData[col]));
+            fieldInfo.SetValue(target, GetValue(fieldInfo, data));
         }
 
         //returns the value of the field using parse
         private object GetValue(FieldInfo fieldInfo, string data)
         {
+            // do parse here like in CtorManager
             throw new NotImplementedException();
         }
 
