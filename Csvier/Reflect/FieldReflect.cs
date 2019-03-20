@@ -13,17 +13,20 @@ namespace Csvier.Reflect
             this.type = type;
         }
 
-        public void SetValue(string name, string data, object target)
+        public void SetValue(Type fType, string name, string data, object target)
         {
-            FieldInfo fieldInfo = type.GetField(name);
-            fieldInfo.SetValue(target, GetValue(fieldInfo, data));
+            FieldInfo fieldInfo = fType.GetField(name);
+            fieldInfo.SetValue(target, GetValue(data));
         }
 
         //returns the value of the field using parse
-        private object GetValue(FieldInfo fieldInfo, string data)
+        private object GetValue(string data)
         {
-            // do parse here like in CtorManager
-            throw new NotImplementedException();
+            BindingFlags bi = BindingFlags.Instance | BindingFlags.Public;
+            MethodInfo mi = type.GetMethod("Parse", new Type[] { typeof(string) });
+            object val = mi.Invoke(type, new object[] { data });
+
+            return val;
         }
 
     }

@@ -66,9 +66,9 @@ namespace Csvier
             if(!Array.Exists(pi, p => p.Name == name))
                 throw new PropertyException($"No such property found in {type.Name}");
 
-            CsvBasicInfo bInfo = new CsvBasicInfo(name, col, separator);
-            PropertyInfo pInfo = type.GetProperty(name);        
-            Type propType = pInfo.GetType();                                   // prop Type
+            CsvBasicInfo bInfo = new CsvBasicInfo(type, name, col, separator);
+            PropertyInfo pInfo = type.GetProperty(name);
+            Type propType = pInfo.PropertyType;                                 // prop Type
             PropertyWrapper pw;
             IReflection reflect;
 
@@ -96,9 +96,9 @@ namespace Csvier
             if (!Array.Exists(fi, f => f.Name == name))
                 throw new FieldException($"No such field found in {type.Name}");
 
-            CsvBasicInfo bInfo = new CsvBasicInfo(name, col, separator);
+            CsvBasicInfo bInfo = new CsvBasicInfo(type, name, col, separator);
             FieldInfo fInfo = type.GetField(name);
-            Type fieldType = fInfo.GetType();                                   // prop Type
+            Type fieldType = fInfo.FieldType;                                   // prop Type
             FieldWrapper fw;
             IReflection reflect;
 
@@ -134,7 +134,7 @@ namespace Csvier
                 CsvBasicInfo bInfo = parser.GetBasicInfo();
                 string[] arrayData = data.Split(bInfo.Separator);
 
-                parser.SetValue(name, arrayData, src);
+                parser.SetValue(arrayData, src);
             }
         }
 

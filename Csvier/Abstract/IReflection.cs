@@ -10,7 +10,7 @@ namespace Csvier.Abstract
 {
     interface IReflection
     {
-        void SetValue(string name, string data, object target);
+        void SetValue(Type type, string name, string data, object target);
 
         //void Add(string paramName, int col);
     }

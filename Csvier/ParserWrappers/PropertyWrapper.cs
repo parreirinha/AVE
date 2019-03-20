@@ -21,9 +21,9 @@ namespace Csvier.Wrappers
             return csvInfo;
         }
 
-        public void SetValue(string name, string[] lineData, object target)
+        public void SetValue(string[] lineData, object target)
         {
-            pReflect.SetValue(name, lineData[csvInfo.Column], target);
+            pReflect.SetValue(csvInfo.climaType, csvInfo.Name, lineData[csvInfo.Column], target);
         }
     }
 }

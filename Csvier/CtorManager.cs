@@ -65,7 +65,7 @@ namespace Csvier
         public object[] CreateObjectArrayData(string[] data)
         {
             if (data == null || data.Length == 0)
-                throw new Exception("there are no data to populate the object");
+                throw new CtorException("there are no data to populate the object");
 
             object[] res = new object[data.Length];
 
@@ -84,7 +84,7 @@ namespace Csvier
         {
             string[] values = data.Split(',');
 
-            object[] parameters = GetParametersForCtor(data); //TODO
+            object[] parameters = GetParametersForCtor(data); 
             object retValue = Activator.CreateInstance(type, parameters);
             return retValue;
         }
@@ -114,7 +114,7 @@ namespace Csvier
 
         private object GetParameterParsed(string paramName, string data, Type paramType)
         {
-            BindingFlags bi = BindingFlags.Instance | BindingFlags.Public;
+            //BindingFlags bi = BindingFlags.Instance | BindingFlags.Public;
             MethodInfo mi = paramType.GetMethod("Parse", new Type[] { typeof(string) });
             object val = mi.Invoke(paramType, new object[] {data });
 

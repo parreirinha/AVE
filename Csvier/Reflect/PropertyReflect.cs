@@ -17,17 +17,25 @@ namespace Csvier.Reflect
             this.type = type;
         }
 
-        public void SetValue(string name, string data, object target)
+        public void SetValue(Type pType, string name, string data, object target)
         {
-            PropertyInfo propertyInfo = type.GetProperty(name);
-            propertyInfo.SetValue(target, GetValue(propertyInfo, data));
+            PropertyInfo propertyInfo = pType.GetProperty(name);
+            propertyInfo.SetValue(target, GetValue(data));
         }
 
-        private object GetValue(PropertyInfo propertyInfo, string data)
+        private object GetValue(string data)
         {
-            // do parse here like in CtorManager
-            throw new NotImplementedException();
+            if (type == typeof(string))
+                return data;
+
+            MethodInfo mi = type.GetMethod("Parse", new Type[] { typeof(string) });
+            object val = mi.Invoke(type, new string[] { data });
+
+            return val;
+
         }
 
     }
 }
+
+

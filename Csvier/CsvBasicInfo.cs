@@ -8,15 +8,17 @@ namespace Csvier.Parsers
 {
     public class CsvBasicInfo
     {
-        public CsvBasicInfo(string name, int column, char separator)
+        public CsvBasicInfo(Type type, string name, int column, char separator)
         {
             Name = name;
             Column = column;
             Separator = separator;
+            climaType = type;
         }
 
         public string Name { get; }
         public int Column { get; }
         public char Separator { get; }
+        public Type climaType { get; }
     }
 }

@@ -91,8 +91,7 @@ namespace Csvier.Test
         }
 
 
-
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(CtorException))]
         [TestMethod]
         public void CtorExceptionNoData()
         {

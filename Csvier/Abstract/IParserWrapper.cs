@@ -9,7 +9,7 @@ namespace Csvier.Abstract
 {
     interface IParserWrapper
     {
-        void SetValue(string name, string[] lineData, object target);
+        void SetValue(string[] lineData, object target);
 
         CsvBasicInfo GetBasicInfo();
     }
