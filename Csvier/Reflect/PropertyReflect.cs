@@ -27,12 +27,12 @@ namespace Csvier.Reflect
         {
             if (type == typeof(string))
                 return data;
-
+            
             MethodInfo mi = type.GetMethod("Parse", new Type[] { typeof(string) });
             object val = mi.Invoke(type, new string[] { data });
 
             return val;
-
+            //public static double Parse (string s);
         }
 
     }

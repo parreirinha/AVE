@@ -22,7 +22,7 @@ namespace Csvier.Reflect
         //returns the value of the field using parse
         private object GetValue(string data)
         {
-            BindingFlags bi = BindingFlags.Instance | BindingFlags.Public;
+            //BindingFlags bf = BindingFlags.Instance | BindingFlags.Public;
             MethodInfo mi = type.GetMethod("Parse", new Type[] { typeof(string) });
             object val = mi.Invoke(type, new object[] { data });
 

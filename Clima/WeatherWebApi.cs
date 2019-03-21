@@ -38,11 +38,59 @@ namespace Clima
         {
             string latStr = lat.ToString("0.000", CultureInfo.InvariantCulture);
             string logStr = log.ToString("0.000", CultureInfo.InvariantCulture);
-            throw new NotImplementedException();
+
+            string dateFrom= FormatDates(from);
+            string dateTo = FormatDates(to);
+
+            string path = PATH_WEATHER
+                            .Replace("{0}", latStr)
+                            .Replace("{1}", logStr)
+                            .Replace("{2}", dateFrom)
+                            .Replace("{3}", dateTo);
+
+            string body = req.GetBody(path);
+
+            CsvParser weather = 
+                new CsvParser(typeof(WeatherInfo))
+                    .CtorArg("date", 0)
+                    .CtorArg("tempC", 2)
+                    .PropArg("PrecipMM", 11)
+                    .PropArg("Desc", 10);
+
+            object[] items = weather
+                    .Load(body)
+                    .RemoveWith("#")
+                    .Remove(1)
+                    .RemoveOddIndexes()
+                    .Parse();
+
+            return (WeatherInfo [])items;
+        }
+
+        private string FormatDates(DateTime date)
+        {
+            return date.Day + "-" + date.Month + "-" + date.Year;
         }
 
         public LocationInfo[] Search(string query) {
-            throw new NotImplementedException();
-        }
+
+            string path = SEARCH.Replace("{0}", query);
+
+            string body = req.GetBody(path);
+
+            CsvParser location =
+                new CsvParser(typeof(LocationInfo), ' ')
+                    .CtorArg("country", 1)
+                    .CtorArg("region", 2)
+                    .CtorArg("latitude", 3)
+                    .CtorArg("longitude", 4);
+
+            object[] locationInfo = location
+                    .Load(body)
+                    .Remove(4)
+                    .Parse();
+
+            return (LocationInfo[])locationInfo;
+        }   
     }
 }
