@@ -57,14 +57,16 @@ namespace Clima
                     .PropArg("PrecipMM", 11)
                     .PropArg("Desc", 10);
 
-            object[] items = weather
+            Object[] items = weather
                     .Load(body)
                     .RemoveWith("#")
                     .Remove(1)
                     .RemoveOddIndexes()
+                    .RemoveEmpties()
                     .Parse();
 
-            return (WeatherInfo [])items;
+            //ERROR HERE !!!
+            return (WeatherInfo[])items;
         }
 
         private string FormatDates(DateTime date)
@@ -88,6 +90,7 @@ namespace Clima
             object[] locationInfo = location
                     .Load(body)
                     .Remove(4)
+                    .RemoveEmpties()
                     .Parse();
 
             return (LocationInfo[])locationInfo;

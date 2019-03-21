@@ -66,12 +66,12 @@ namespace Csvier
         }
         public CsvParser RemoveEvenIndexes()
         {
-            data = data.Where((item, index) => index % 2 != 0).ToArray();
+            data = data.Where((item, index) => index % 2 == 0).ToArray();
             return this;
         }
         public CsvParser RemoveOddIndexes()
         {
-            data = data.Where((item, index) => index % 2 == 0).ToArray();
+            data = data.Where((item, index) => index % 2 != 0).ToArray();
             return this;
         }
         public object[] Parse()
