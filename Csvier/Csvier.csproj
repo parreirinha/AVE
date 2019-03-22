@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IReflection.cs" />
     <Compile Include="Abstract\IParserWrapper.cs" />
-    <Compile Include="Cache\ParserCache.cs" />
+    <Compile Include="Cache\ReflectorsCache.cs" />
     <Compile Include="CsvParser.cs" />
     <Compile Include="CtorManager.cs" />
     <Compile Include="Exceptions\CtorException.cs" />

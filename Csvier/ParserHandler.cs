@@ -1,4 +1,5 @@
 ﻿using Csvier.Abstract;
+using Csvier.Cache;
 using Csvier.Exceptions;
 using Csvier.Parsers;
 using Csvier.Reflect;
@@ -16,7 +17,7 @@ namespace Csvier
     {
         private Type type;
         CtorManager ctorManager;
-        Dictionary<Type, IReflection> reflectors;
+        //Dictionary<Type, IReflection> reflectors;
         Dictionary<string, IParserWrapper> parsers;
         PropertyInfo[] pi;
         FieldInfo[] fi;
@@ -27,7 +28,7 @@ namespace Csvier
         {
             this.type = type;
             ctorManager = new CtorManager(type, separator);
-            reflectors = new Dictionary<Type, IReflection>();
+            //reflectors = new Dictionary<Type, IReflection>();
             parsers = new Dictionary<string, IParserWrapper>();
             pi = type.GetProperties();
             fi = type.GetFields();
@@ -72,7 +73,8 @@ namespace Csvier
             PropertyWrapper pw;
             IReflection reflect;
 
-            if (reflectors.TryGetValue(propType,  out reflect))
+            //if (reflectors.TryGetValue(propType,  out reflect))
+            if (ReflectorsCache.cache.TryGetValue(propType, out reflect))
             {
                 pw = new PropertyWrapper((PropertyReflect)reflect, bInfo);
                 parsers.Add(name, pw);
@@ -80,7 +82,7 @@ namespace Csvier
             else
             {
                 PropertyReflect pr = new PropertyReflect(propType);
-                reflectors.Add(propType, pr);
+                ReflectorsCache.cache.Add(propType, pr);
                 pw = new PropertyWrapper(pr, bInfo);
                 parsers.Add(name, pw);
             }
@@ -102,7 +104,7 @@ namespace Csvier
             FieldWrapper fw;
             IReflection reflect;
 
-            if (reflectors.TryGetValue(fieldType, out reflect))
+            if (ReflectorsCache.cache.TryGetValue(fieldType, out reflect))
             {
                 fw = new FieldWrapper((FieldReflect)reflect, bInfo);
                 parsers.Add(name, fw);
@@ -110,7 +112,7 @@ namespace Csvier
             else
             {
                 FieldReflect fr = new FieldReflect(fieldType);
-                reflectors.Add(fieldType, fr);
+                ReflectorsCache.cache.Add(fieldType, fr);
                 fw = new FieldWrapper(fr, bInfo);
                 parsers.Add(name, fw);
             }

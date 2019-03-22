@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Csvier.Abstract
 {
-    interface IReflection
+    public interface IReflection
     {
         void SetValue(Type type, string name, string data, object target);
 
