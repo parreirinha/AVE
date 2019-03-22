@@ -104,7 +104,7 @@ namespace Csvier
             object[] parameters = new object[ctorParams.Count];
 
             int idx = 0;
-            string[] values = data.Split(separator);
+            string[] values = data.Split(separator); 
             foreach(KeyValuePair<string, int> pair in ctorParams)
             {
                 currParam = pi[idx];
