@@ -84,9 +84,9 @@ namespace Csvier
          ***/
         private object BuildInstance(string data)
         {
-            string[] values = data.Split(',');
+            string[] values = data.Split(separator);
 
-            object[] parameters = GetParametersForCtor(data); 
+            object[] parameters = GetParametersForCtor(values); 
             object retValue = Activator.CreateInstance(type, parameters);
             return retValue;
         }
@@ -96,7 +96,7 @@ namespace Csvier
         /**
          * retorna um array de objectos com os valores finais para passar ao Activator.CreateInstance
          * */
-        private object[] GetParametersForCtor(string data)
+        private object[] GetParametersForCtor(string[] data)
         {
             ConstructorInfo currCtor = FindCtor();
             ParameterInfo[] pi = currCtor.GetParameters();
@@ -104,19 +104,21 @@ namespace Csvier
             object[] parameters = new object[ctorParams.Count];
 
             int idx = 0;
-            string[] values = data.Split(separator); 
+            //string[] values = data.Split(separator); 
             foreach(KeyValuePair<string, int> pair in ctorParams)
             {
                 currParam = pi[idx];
                 Type paramType = currParam.ParameterType;
-                parameters[idx++] = GetParameterParsed(pair.Key, values[pair.Value], paramType);
+                parameters[idx++] = GetParameterParsed(pair.Key, data[pair.Value]/*values[pair.Value]*/, paramType);
             }
             return parameters;
         }
 
         private object GetParameterParsed(string paramName, string data, Type paramType)
         {
-            //BindingFlags bi = BindingFlags.Instance | BindingFlags.Public;
+            if (paramType == typeof(string))
+                return data;
+
             MethodInfo mi = paramType.GetMethod("Parse", new Type[] { typeof(string) });
             object val = mi.Invoke(paramType, new object[] {data });
 

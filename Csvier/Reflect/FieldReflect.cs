@@ -24,6 +24,9 @@ namespace Csvier.Reflect
         //returns the value of the field using parse
         private object GetValue(string data)
         {
+            if (type == typeof(string))
+                return data;
+
             object val = mi.Invoke(type, new object[] { data });
 
             return val;
