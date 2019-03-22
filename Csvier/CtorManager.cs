@@ -14,10 +14,12 @@ namespace Csvier
         private Dictionary<String, int> ctorParams;
         private ConstructorInfo[] ci;
         private string[] data;
+        private char separator;
 
-        public CtorManager(Type type)
+        public CtorManager(Type type, char separator)
         {
             this.type = type;
+            this.separator = separator;
             ctorParams = new Dictionary<string, int>();
             ci = type.GetConstructors();
         }
@@ -102,7 +104,7 @@ namespace Csvier
             object[] parameters = new object[ctorParams.Count];
 
             int idx = 0;
-            string[] values = data.Split(',');
+            string[] values = data.Split(separator);
             foreach(KeyValuePair<string, int> pair in ctorParams)
             {
                 currParam = pi[idx];

@@ -48,7 +48,7 @@ namespace Csvier.Test
         }
 
         [TestMethod]
-        public void RemoveEvenIndexes()
+        public void RemoveOddIndexes()
         {
             CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
                 .CtorArg("date", 0)
@@ -56,7 +56,7 @@ namespace Csvier.Test
 
             object[] items = pastWeather
                             .Load(sample1)
-                            .RemoveEvenIndexes()
+                            .RemoveOddIndexes()
                             .Parse();
 
             Assert.AreEqual(18, ((WeatherInfo)items[0]).TempC);
@@ -67,7 +67,7 @@ namespace Csvier.Test
 
 
         [TestMethod]
-        public void RemoveOddIndexes()
+        public void RemoveEvenIndexes()
         {
             CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
                 .CtorArg("date", 0)
@@ -75,7 +75,7 @@ namespace Csvier.Test
 
             object[] items = pastWeather
                             .Load(sample1)
-                            .RemoveOddIndexes()
+                            .RemoveEvenIndexes()
                             .Parse();
 
             Assert.AreEqual(17, ((WeatherInfo)items[0]).TempC);

@@ -26,7 +26,7 @@ namespace Csvier
         public ParserHandler(Type type, char separator)
         {
             this.type = type;
-            ctorManager = new CtorManager(type);
+            ctorManager = new CtorManager(type, separator);
             reflectors = new Dictionary<Type, IReflection>();
             parsers = new Dictionary<string, IParserWrapper>();
             pi = type.GetProperties();

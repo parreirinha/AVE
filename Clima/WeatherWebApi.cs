@@ -61,12 +61,11 @@ namespace Clima
                     .Load(body)
                     .RemoveWith("#")
                     .Remove(1)
-                    .RemoveOddIndexes()
                     .RemoveEmpties()
+                    .RemoveOddIndexes()
                     .Parse();
 
-            //ERROR HERE !!!
-            return (WeatherInfo[])items;
+            return items.Select(x => (WeatherInfo)x).ToArray();
         }
 
         private string FormatDates(DateTime date)
@@ -93,7 +92,7 @@ namespace Clima
                     .RemoveEmpties()
                     .Parse();
 
-            return (LocationInfo[])locationInfo;
+            return locationInfo.Select(x => (LocationInfo)x).ToArray();
         }   
     }
 }
