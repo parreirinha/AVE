@@ -43,11 +43,16 @@
     <Compile Include="Abstract\IReflection.cs" />
     <Compile Include="Abstract\IParserWrapper.cs" />
     <Compile Include="Cache\ReflectorsCache.cs" />
+    <Compile Include="CsvAttributes\CtorArgAttribute.cs" />
+    <Compile Include="CsvAttributes\FieldArgAttribute.cs" />
+    <Compile Include="CsvAttributes\PropertyArgAttribute.cs" />
+    <Compile Include="CsvAttributes\CsvCorrespondenceAttr.cs" />
     <Compile Include="CsvParser.cs" />
     <Compile Include="CtorManager.cs" />
     <Compile Include="Exceptions\CtorException.cs" />
     <Compile Include="Exceptions\FieldException.cs" />
     <Compile Include="Exceptions\PropertyException.cs" />
+    <Compile Include="Abstract\ICsvAttr.cs" />
     <Compile Include="ParserHandler.cs" />
     <Compile Include="Reflect\FieldReflect.cs" />
     <Compile Include="CsvBasicInfo.cs" />

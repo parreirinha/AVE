@@ -60,6 +60,7 @@
     <Compile Include="Parsers\PropertyParserTest.cs" />
     <Compile Include="Part2Removes.cs" />
     <Compile Include="Part2Parse.cs" />
+    <Compile Include="AttributeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
