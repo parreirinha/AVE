@@ -56,8 +56,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Part1Test.cs" />
-    <Compile Include="Parsers\FieldParserTest.cs" />
-    <Compile Include="Parsers\PropertyParserTest.cs" />
     <Compile Include="Part2Removes.cs" />
     <Compile Include="Part2Parse.cs" />
     <Compile Include="AttributeTest.cs" />
