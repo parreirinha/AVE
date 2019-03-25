@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Csvier\Csvier.csproj" />
+    <ProjectReference Include="..\Request\Request.csproj" />
+  </ItemGroup>
+
 </Project>

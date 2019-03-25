@@ -2,7 +2,7 @@
 
 namespace ClimateDataAPI
 {
-    public class Class1
+    public class ClimateDataApi
     {
     }
 }
