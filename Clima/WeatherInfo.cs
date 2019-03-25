@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Csvier;
+using Csvier.CsvAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace Clima
 {
+    [CtorArg(typeof(CsvParser), "date", 0)]
+    [CtorArg(typeof(CsvParser), "tempC", 2)]
+    [PropertyArg(typeof(CsvParser), "PrecipMM", 11)]
+    [PropertyArg(typeof(CsvParser), "Desc", 10)]
     public class WeatherInfo
     {
         public DateTime Date { get;  }

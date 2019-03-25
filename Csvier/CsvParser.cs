@@ -6,10 +6,7 @@ using System.Reflection;
 
 namespace Csvier
 {
-    [CtorArg(typeof(CsvParser), "date", 0)]
-    [CtorArg(typeof(CsvParser), "tempC", 2)]
-    [PropertyArg(typeof(CsvParser), "PrecipMM", 11)]
-    [PropertyArg(typeof(CsvParser), "Desc", 10)]
+
     public class CsvParser
     {
         private Type type;

@@ -16,12 +16,12 @@ namespace Csvier.CsvAttributes
         private MethodInfo mi;
         private Type type;
 
-        public CtorArgAttribute(Type type, string name, int col)
+        public CtorArgAttribute(Type parserType, string name, int col)
         {
             Name = name;
             Column = col;
-            this.type = type;
-            mi = type.GetMethod("CtorArg", new Type[] { typeof(string), typeof(int) });
+            this.type = parserType;
+            mi = parserType.GetMethod("CtorArg", new Type[] { typeof(string), typeof(int) });
         }
 
         public void InvokeMethodForCorrespondence(CsvParser parser)

@@ -10,10 +10,10 @@ namespace Csvier
 {
     public static class CsvCorrespondenceAttr
     {
-        public static void MakeAttributeCorrespondence(CsvParser parser)
+        public static void MakeAttributeCorrespondence(CsvParser parser, Type custom)
         {
             Type type = parser.GetType();
-            object[] attrs = type.GetCustomAttributes(false);
+            object[] attrs = custom.GetCustomAttributes(false);
 
             foreach(object attr in attrs)
             {

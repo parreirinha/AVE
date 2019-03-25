@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Csvier;
+using Csvier.CsvAttributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Clima
 {
+
+    [CtorArg(typeof(CsvParser), "country", 0)]
+    [CtorArg(typeof(CsvParser), "region", 2)]
+    [CtorArg(typeof(CsvParser), "latitude", 3)]
+    [CtorArg(typeof(CsvParser), "longitude", 4)]
     public class LocationInfo
     {
         public String Country { get; set; }
@@ -24,5 +31,6 @@ namespace Clima
             Latitude = latitude;
             Longitude = longitude;
         }
+
     }
 }

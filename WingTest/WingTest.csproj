@@ -75,6 +75,10 @@
       <Project>{de857858-8828-4bac-9c05-c5d38a5f3d05}</Project>
       <Name>Csvier</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Request\Request.csproj">
+      <Project>{74b49f1b-c790-4809-8488-1c97cf567995}</Project>
+      <Name>Request</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
