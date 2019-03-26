@@ -10,7 +10,7 @@ namespace Csvier.Test
     public class Part5
     {
         [TestMethod]
-        public void TestLoadSearchOporto()
+        public void ClimateDataAPITest()
         {
             using (ClimateDataApi api = new ClimateDataApi())
             {
@@ -18,10 +18,10 @@ namespace Csvier.Test
                 Assert.AreEqual(15, vals.Length);
 
                 Assert.AreEqual("bccr_bcm2_0", vals[0].GCM);
-                Assert.AreEqual("variableType", vals[0].variableType);
-                Assert.AreEqual("jan", vals[0].Jan);
-                Assert.AreEqual("feb", vals[0].Feb);
-                Assert.AreEqual("mar", vals[0].Mar);
+                Assert.AreEqual("pr", vals[0].variableType);
+                Assert.AreEqual(112.6917662, vals[0].Jan);
+                Assert.AreEqual(81.75626223, vals[0].Feb);
+                Assert.AreEqual(81.91241482, vals[0].Mar);
 
                 Assert.AreEqual("cccma_cgcm3_1", vals[1].GCM);
                 Assert.AreEqual("cnrm_cm3", vals[2].GCM);

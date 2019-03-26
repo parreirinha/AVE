@@ -10,9 +10,9 @@ namespace ClimateDataAPI
         public string variableType;
         public DateTime from_year;
         public DateTime to_year;
-        public int Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec;
+        public double Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec;
 
-        public ClimateValues(string gCM, string variableType, int jan, int feb, int mar)
+        public ClimateValues(string gCM, string variableType, double jan, double feb, double mar)
         {
             GCM = gCM;
             this.variableType = variableType;
@@ -21,7 +21,7 @@ namespace ClimateDataAPI
             Mar = mar;
         }
 
-        public ClimateValues(string gCM, DateTime from_year, DateTime to_year, int jul, int aug)
+        public ClimateValues(string gCM, DateTime from_year, DateTime to_year, double jul, double aug)
         {
             GCM = gCM;
             this.from_year = from_year;
@@ -30,7 +30,7 @@ namespace ClimateDataAPI
             Aug = aug;
         }
 
-        public ClimateValues(string gCM, string variableType, DateTime from_year, DateTime to_year, int jan, int jun)
+        public ClimateValues(string gCM, string variableType, DateTime from_year, DateTime to_year, double jan, double jun)
         {
             GCM = gCM;
             this.variableType = variableType;
