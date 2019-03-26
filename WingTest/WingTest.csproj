@@ -59,6 +59,7 @@
     <Compile Include="Part2Removes.cs" />
     <Compile Include="Part2Parse.cs" />
     <Compile Include="AttributeTest.cs" />
+    <Compile Include="Part5.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -67,6 +68,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClimateDataAPI\ClimateDataAPI.csproj">
+      <Project>{0D62D704-6B22-4E20-B715-8AF5B13D64D0}</Project>
+      <Name>ClimateDataAPI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Clima\Clima.csproj">
       <Project>{edb6b12d-1a1b-4c9c-a14f-6084f742d4c3}</Project>
       <Name>Clima</Name>

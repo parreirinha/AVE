@@ -4,13 +4,13 @@ using System.Text;
 
 namespace ClimateDataAPI
 {
-    class ClimateValues
+    public class ClimateValues
     {
-        string GCM;
-        string variableType;
-        DateTime from_year;
-        DateTime to_year;
-        int Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec;
+        public string GCM;
+        public string variableType;
+        public DateTime from_year;
+        public DateTime to_year;
+        public int Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec;
 
         public ClimateValues(string gCM, string variableType, int jan, int feb, int mar)
         {
