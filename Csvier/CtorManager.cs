@@ -13,7 +13,6 @@ namespace Csvier
         private Type type;
         private Dictionary<String, int> ctorParams;
         private ConstructorInfo[] ci;
-        private string[] data;
         private char separator;
 
         public CtorManager(Type type, char separator)
@@ -34,7 +33,7 @@ namespace Csvier
             return ctorParams.ContainsKey(name);
         }
 
-
+        // returns the ctor that will be used to create the instances
         private ConstructorInfo FindCtor()
         {  
             foreach (ConstructorInfo currCtorInfo in ci)
@@ -62,7 +61,7 @@ namespace Csvier
         }
 
         /*
-         * retorna
+         * retorns the created objects
          * */
         public object[] CreateObjectArrayData(string[] data)
         {
@@ -92,7 +91,6 @@ namespace Csvier
         }
 
 
-        //TODO
         /**
          * retorna um array de objectos com os valores finais para passar ao Activator.CreateInstance
          * */
@@ -104,16 +102,19 @@ namespace Csvier
             object[] parameters = new object[ctorParams.Count];
 
             int idx = 0;
-            //string[] values = data.Split(separator); 
             foreach(KeyValuePair<string, int> pair in ctorParams)
             {
                 currParam = pi[idx];
                 Type paramType = currParam.ParameterType;
-                parameters[idx++] = GetParameterParsed(pair.Key, data[pair.Value]/*values[pair.Value]*/, paramType);
+                parameters[idx++] = GetParameterParsed(pair.Key, data[pair.Value], paramType);
             }
             return parameters;
         }
 
+        /*
+         * Parse line values(strings) to "real type" value. 
+         * Makes the correspondence between csv file and the object WeatherInfo, locationInfo, etc...
+         * */
         private object GetParameterParsed(string paramName, string data, Type paramType)
         {
             if (paramType == typeof(string))

@@ -8,10 +8,17 @@ using System.Threading.Tasks;
 
 namespace Csvier.Abstract
 {
+    /**
+     * Calls SetValue of corresponding objects that implements this interface.
+     * There are two types of objects that implements IReflect:
+     *      #FieldReflect
+     *      #PropReflect
+     * 
+     * */
     public interface IReflection
     {
         void SetValue(Type type, string name, string data, object target);
 
-        //void Add(string paramName, int col);
+
     }
 }

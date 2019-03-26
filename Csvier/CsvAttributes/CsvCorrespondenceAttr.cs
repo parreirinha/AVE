@@ -10,9 +10,14 @@ namespace Csvier
 {
     public static class CsvCorrespondenceAttr
     {
+        /**
+         * This static method will call all the methods(CtorArgs, PropArgs, FieldArgs) that are keeped in all attributes defined
+         * this method gets all attributes of the object custom and for all attributes of type ICsvCustomAttributes 
+         * calls InvokeMethodForCorrespondence
+         * 
+         * */
         public static void MakeAttributeCorrespondence(CsvParser parser, Type custom)
         {
-            Type type = parser.GetType();
             object[] attrs = custom.GetCustomAttributes(false);
 
             foreach(object attr in attrs)

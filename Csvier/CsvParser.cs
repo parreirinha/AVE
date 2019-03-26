@@ -78,10 +78,10 @@ namespace Csvier
         }
         public object[] Parse()
         {
-            object[] weathers= parser.GetObjects(data);
+            object[] weathers= parser.GetObjects(data);     // creates objects
 
             for (int i = 0; i < weathers.Length; i++)
-                parser.SetFieldAndPropertiesValues(weathers[i], data[i]);
+                parser.SetFieldAndPropertiesValues(weathers[i], data[i]);   // set properties and fields values
 
             return weathers;
         }

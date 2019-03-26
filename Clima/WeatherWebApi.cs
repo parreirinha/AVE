@@ -79,8 +79,7 @@ namespace Clima
 
             string body = req.GetBody(path);
 
-            CsvParser location =
-                new CsvParser(typeof(LocationInfo), '\t')
+            CsvParser location = new CsvParser(typeof(LocationInfo), '\t')
                     .CtorArg("country", 1)
                     .CtorArg("region", 2)
                     .CtorArg("latitude", 3)

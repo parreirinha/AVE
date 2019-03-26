@@ -40,7 +40,6 @@ namespace ClimateDataAPI
 
             string body = req.GetBody(request);
 
-
             CsvParser values =
                 new CsvParser(typeof(ClimateValues))
                     .CtorArg("gCM", 0)
@@ -56,7 +55,6 @@ namespace ClimateDataAPI
                     .Parse();
 
             return items.Select(x => (ClimateValues)x).ToArray();
-
         }
     }
 }

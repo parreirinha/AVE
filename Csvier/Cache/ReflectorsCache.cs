@@ -7,29 +7,12 @@ using System.Threading.Tasks;
 
 namespace Csvier.Cache
 {
+    /**
+     * Cache for object of type IReflection, in order to prevent duplication of reflection in objects of same type
+     * 
+     * */
     public class ReflectorsCache
     {
         public static Dictionary<Type, IReflection> cache = new Dictionary<Type, IReflection>();
-
-        /*
-        
-        public IReflection TryGet(Type t)
-        {
-            IReflection res;
-            reflectorsCache.TryGetValue(t, out res);
-            return res;
-        }
-
-        public bool ContainsKey(Type t)
-        {
-            return reflectorsCache.ContainsKey(t);
-        }
-
-        public void Add(Type t, IReflection reflect)
-        {
-            reflectorsCache.Add(t, reflect);
-        }
-
-        */
     }
 }

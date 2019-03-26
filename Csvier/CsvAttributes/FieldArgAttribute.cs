@@ -24,6 +24,7 @@ namespace Csvier.CsvAttributes
             mi = type.GetMethod("FieldArg", new Type[] { typeof(string), typeof(int) });
         }
 
+        // Invokes method FieldArgs of CsvParser with the parameters name and col of constructor
         public void InvokeMethodForCorrespondence(CsvParser parser)
         {
             object[] parameters = new object[] { Name, Column };

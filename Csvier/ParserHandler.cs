@@ -17,8 +17,7 @@ namespace Csvier
     {
         private Type type;
         CtorManager ctorManager;
-        //Dictionary<Type, IReflection> reflectors;
-        Dictionary<string, IParserWrapper> parsers;
+        Dictionary<string, IParserWrapper> parsers; // IParserWrapper => CsvBasicInfo + IReflect object
         PropertyInfo[] pi;
         FieldInfo[] fi;
         ConstructorInfo[] ci;
@@ -28,7 +27,6 @@ namespace Csvier
         {
             this.type = type;
             ctorManager = new CtorManager(type, separator);
-            //reflectors = new Dictionary<Type, IReflection>();
             parsers = new Dictionary<string, IParserWrapper>();
             pi = type.GetProperties();
             fi = type.GetFields();
@@ -73,22 +71,21 @@ namespace Csvier
             PropertyWrapper pw;
             IReflection reflect;
 
-            //if (reflectors.TryGetValue(propType,  out reflect))
-            if (ReflectorsCache.cache.TryGetValue(propType, out reflect))
+            if (ReflectorsCache.cache.TryGetValue(propType, out reflect))   
             {
+                // if reflect of type propType exists, get it from cache
                 pw = new PropertyWrapper((PropertyReflect)reflect, bInfo);
                 parsers.Add(name, pw);
             }
             else
             {
+                //if not build a new onde, add to cache and create PropertyWrapper 
+                //and add it to parsers Dictionary
                 PropertyReflect pr = new PropertyReflect(propType);
                 ReflectorsCache.cache.Add(propType, pr);
                 pw = new PropertyWrapper(pr, bInfo);
                 parsers.Add(name, pw);
             }
-            
-
-            //parsers.Add(name, new PropertyReflect(type));
         }
 
         public void AddField(string name, int col)
@@ -128,7 +125,6 @@ namespace Csvier
          * */
         public void SetFieldAndPropertiesValues(object src, string data)
         {
-
             foreach(KeyValuePair<string, IParserWrapper> pw in parsers)
             {
                 IParserWrapper parser = pw.Value;

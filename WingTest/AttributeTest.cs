@@ -87,7 +87,6 @@ namespace Csvier.Test
         {
             const string WEATHER_KEY = "72dbd0b57ebb460c861120116191303";
             const string WEATHER_HOST = "http://api.worldweatheronline.com/premium/v1/";
-            const string PATH_WEATHER = WEATHER_HOST + "past-weather.ashx?q={0},{1}&date={2}&enddate={3}&tp=24&format=csv&key=" + WEATHER_KEY;
             const string SEARCH = WEATHER_HOST + "search.ashx?query={0}&format=tab&key=" + WEATHER_KEY;
             req = new HttpRequest();
 
@@ -99,16 +98,11 @@ namespace Csvier.Test
 
             CsvCorrespondenceAttr.MakeAttributeCorrespondence(location, typeof(LocationInfo)); // this makes the correspondence between ctorArgs, fieldArgs and paramArgs
 
-
             object[] locationInfo = location
                     .Load(body)
                     .Remove(4)
                     .RemoveEmpties()
                     .Parse();
-
-
-
-            //LocationInfo[] res = locationInfo.Select(x => (LocationInfo)x).ToArray();
 
             Assert.AreEqual(6, locationInfo.Length);
         }

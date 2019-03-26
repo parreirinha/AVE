@@ -25,6 +25,7 @@ namespace Csvier.Reflect
             propertyInfo.SetValue(target, GetValue(data));
         }
 
+        //returns the value of the field using parse
         private object GetValue(string data)
         {
             if (type == typeof(string))
