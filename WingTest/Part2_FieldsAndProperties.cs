@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Csvier.Test
 {
     [TestClass]
-    public class Part2FieldsAndProperties
+    public class Part2_FieldsAndProperties
     {
 
         string sample1;

@@ -8,7 +8,7 @@ using Csvier.Exceptions;
 namespace Csvier.Test
 {
     [TestClass]
-    public class Parte1Test
+    public class Part1
     {
         [TestMethod]
         public void TestWeatherInfoWorkExample()

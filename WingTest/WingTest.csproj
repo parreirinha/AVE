@@ -55,10 +55,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Part1Test.cs" />
-    <Compile Include="Part2Removes.cs" />
-    <Compile Include="Part2Parse.cs" />
-    <Compile Include="AttributeTest.cs" />
+    <Compile Include="Part1.cs" />
+    <Compile Include="Part2_Removes.cs" />
+    <Compile Include="Part2_FieldsAndProperties.cs" />
+    <Compile Include="Part4_AttributeTest.cs" />
     <Compile Include="Part5.cs" />
   </ItemGroup>
   <ItemGroup>

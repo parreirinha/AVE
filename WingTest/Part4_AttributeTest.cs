@@ -7,7 +7,7 @@ using Request;
 namespace Csvier.Test
 {
     [TestClass]
-    public class AttributeTest
+    public class Part4_AttributeTest
     {
 
         string sample1, sample2;
