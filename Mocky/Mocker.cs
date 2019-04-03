@@ -39,7 +39,7 @@ namespace Mocky
             // !!!!!! TO DO !!!!!!
             //throw new NotImplementedException();
 
-            AssemblyName aName = new AssemblyName("DynamicAssemblyExample");
+            AssemblyName aName = new AssemblyName("DynamicAssembly");
             AssemblyBuilder ab = AppDomain.CurrentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.RunAndSave);
 
             ModuleBuilder mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
@@ -62,15 +62,18 @@ namespace Mocky
             {
                 ParameterInfo[] pi = mInfo.GetParameters();
                 Type[] paramtype = GetParamTypes(pi);
+
+                MethodAttributes attributes = MethodAttributes.Public; // | MethodAttributes.Virtual | MethodAttributes.HideBySig | MethodAttributes.NewSlot;
                 MethodBuilder methodBuilder = tb.DefineMethod(
-                    mInfo.Name, 
-                    mInfo.Attributes,                   //ver estes atributos
+                    mInfo.Name,
+                    attributes,                   //ver estes atributos
                     mInfo.ReturnParameter.GetType(),
                     paramtype);
 
                 ILGenerator methodIl = methodBuilder.GetILGenerator();
                 //newobj instance void [mscorlib]System.NotImplementedException::.ctor()
                 methodIl.Emit(OpCodes.Newobj, typeof(NotImplementedException)); // aqui enviar excepção
+                methodIl.Emit(OpCodes.Ret);
             }
 
             ILGenerator il = ctorBuilder.GetILGenerator();
