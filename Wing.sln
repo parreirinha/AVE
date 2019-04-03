@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mocky", "Mocky\Mocky.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockyTest", "MockyTest\MockyTest.csproj", "{91361E11-37B5-465C-A9CE-24ADE8342395}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmitTest", "EmitTest\EmitTest.csproj", "{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{91361E11-37B5-465C-A9CE-24ADE8342395}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91361E11-37B5-465C-A9CE-24ADE8342395}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91361E11-37B5-465C-A9CE-24ADE8342395}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
