@@ -63,7 +63,7 @@ namespace Mocky
                 ParameterInfo[] pi = mInfo.GetParameters();
                 Type[] paramtype = GetParamTypes(pi);
 
-                MethodAttributes attributes = MethodAttributes.Public; // | MethodAttributes.Virtual | MethodAttributes.HideBySig | MethodAttributes.NewSlot;
+                MethodAttributes attributes = MethodAttributes.Public | MethodAttributes.Virtual | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.Final;
                 MethodBuilder methodBuilder = tb.DefineMethod(
                     mInfo.Name,
                     attributes,                   //ver estes atributos
