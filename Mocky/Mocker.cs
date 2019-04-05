@@ -73,7 +73,7 @@ namespace Mocky
                 ILGenerator methodIl = methodBuilder.GetILGenerator();
                 //newobj instance void [mscorlib]System.NotImplementedException::.ctor()
                 methodIl.Emit(OpCodes.Newobj, typeof(NotImplementedException)); // aqui enviar excepção
-                methodIl.Emit(OpCodes.Ret);
+                methodIl.Emit(OpCodes.Throw);
             }
 
             ILGenerator il = ctorBuilder.GetILGenerator();
