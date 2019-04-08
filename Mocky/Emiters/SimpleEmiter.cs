@@ -63,37 +63,35 @@ namespace Mocky.Emiters
                 CreateMethod(mInfo);
             }
 
-            Type[] interfaces = type.GetInterfaces();
+            CreateMethodsFromInterfaceHierarchy(type);
+            //Type[] interfaces = type.GetInterfaces();
 
-            if(interfaces.Length == 1)
-            {
-                MethodInfo[] imethods = interfaces[0].GetMethods();
-                CreateMethod(imethods[0]);
-            }
-            
-
-            //foreach (Type anInterface in interfaces)
+            //if(interfaces.Length == 1)
             //{
-            //    var mapp = GetType().GetInterfaceMap(anInterface);
-            //    foreach (var info in mapp.TargetMethods)
-            //        ;
+            //    MethodInfo[] imethods = interfaces[0].GetMethods();
+            //    CreateMethod(imethods[0]);
             //}
-
 
         }
 
-        //public void BuildMethodsFlattenHierarchy()
-        //{
-        //    MethodInfo[] mi = type.GetMethods(BindingFlags.FlattenHierarchy);
+        private void CreateMethodsFromInterfaceHierarchy(Type type)
+        {
+            Type[] interfaces = type.GetInterfaces();
 
-        //    if (mi.Length == 0)
-        //        return;
+            if (interfaces.Length == 0) //condição de paragem
+                return;
 
-        //    foreach (MethodInfo m in mi)
-        //    {
-        //        CreateMethod(m);
-        //    }
-        //}
+            foreach(Type t in interfaces)       //percorre todas as interfaces do tipo
+            {
+                CreateMethodsFromInterfaceHierarchy(t); // recursividade
+                MethodInfo[] iMethods = t.GetMethods(); // obtem todos os métodos da interface
+
+                foreach(MethodInfo mi in iMethods)
+                {
+                    CreateMethod(mi);       // implementa-os com throw NotImplementedException
+                }
+            }
+        }
 
         private void CreateMethod(MethodInfo mi)
         {

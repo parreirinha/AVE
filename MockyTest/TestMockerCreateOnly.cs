@@ -20,10 +20,6 @@ namespace Mocky.Test
             calc = (ICalculator)mockCalc.Create();
             Mocker mockReq = new Mocker(typeof(IHttpRequest));
             req = (IHttpRequest)mockReq.Create();
-
-
-            //Mocker mockReq = new Mocker(typeof(MockIHttpRequest));
-            //req = (helpers.IHttpRequest)mockReq.Create();
         }
 
         [TestMethod]
