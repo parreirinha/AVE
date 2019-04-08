@@ -15,8 +15,8 @@ namespace Mocky.Test
 
         public TestMockerCreateOnly()
         {
-            Mocker mockCalc = new Mocker(typeof(ICalculator));
-            calc = (ICalculator)mockCalc.Create();
+            //Mocker mockCalc = new Mocker(typeof(ICalculator));
+            //calc = (ICalculator)mockCalc.Create();
             Mocker mockReq = new Mocker(typeof(IHttpRequest));
             req = (IHttpRequest)mockReq.Create();
         }

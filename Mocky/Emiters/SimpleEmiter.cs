@@ -26,6 +26,7 @@ namespace Mocky.Emiters
             mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
             tb = mb.DefineType("Mock" + type.Name, TypeAttributes.Public);
             tb.AddInterfaceImplementation(type);
+            
             this.type = type;
         }
 
@@ -79,7 +80,7 @@ namespace Mocky.Emiters
                     MethodAttributes.Virtual;
 
             Type retType = mi.ReturnType;
-            Type[] parameterType = GetTypeArrayOfMethodParameter(mi);//new Type[]{ typeof(int), typeof(int) };
+            Type[] parameterType = GetTypeArrayOfMethodParameter(mi);
 
             MethodBuilder mb = tb.DefineMethod(
                     mi.Name,
@@ -97,6 +98,10 @@ namespace Mocky.Emiters
         private Type[] GetTypeArrayOfMethodParameter(MethodInfo mi)
         {
             ParameterInfo[] pi = mi.GetParameters();
+
+            if (pi.Length == 0)
+                return Type.EmptyTypes;
+
             Type[] res = new Type[pi.Length];
 
             for(int i = 0; i<pi.Length; i++)

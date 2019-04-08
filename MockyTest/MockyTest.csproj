@@ -48,6 +48,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="helpers\CalcTest.cs" />
+    <Compile Include="helpers\HttpTest.cs" />
     <Compile Include="ICalculator.cs" />
     <Compile Include="TestMockerCreateOnly.cs" />
     <Compile Include="TestMockerForPartialCalculator.cs" />
