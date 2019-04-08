@@ -26,7 +26,13 @@ namespace Mocky.Emiters
             mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
             tb = mb.DefineType("Mock" + type.Name, TypeAttributes.Public);
             tb.AddInterfaceImplementation(type);
+
+            Type[] interfaces = type.GetInterfaces();
+            if(interfaces.Length > 0)
+                foreach(Type t in interfaces)
+                    tb.AddInterfaceImplementation(t);
             
+
             this.type = type;
         }
 
@@ -49,12 +55,30 @@ namespace Mocky.Emiters
 
         public void BuildMethods()
         {
+
             MethodInfo[] mi = type.GetMethods();
 
             foreach(MethodInfo mInfo in mi)
             {
                 CreateMethod(mInfo);
             }
+
+            Type[] interfaces = type.GetInterfaces();
+
+            if(interfaces.Length == 1)
+            {
+                MethodInfo[] imethods = interfaces[0].GetMethods();
+                CreateMethod(imethods[0]);
+            }
+            
+
+            //foreach (Type anInterface in interfaces)
+            //{
+            //    var mapp = GetType().GetInterfaceMap(anInterface);
+            //    foreach (var info in mapp.TargetMethods)
+            //        ;
+            //}
+
 
         }
 

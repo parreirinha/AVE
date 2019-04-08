@@ -40,7 +40,7 @@ namespace Mocky
             // !!!!!! TO DO !!!!!!
             //throw new NotImplementedException();
 
-            SimpleEmiter emiter = new SimpleEmiter(klass,"DynamicAssembly");
+            SimpleEmiter emiter = new SimpleEmiter(klass, "DynamicAssembly");
             emiter.BuildConstructorWithOneParameter();
             emiter.BuildMethods();
             Type createdType = emiter.CreateType();

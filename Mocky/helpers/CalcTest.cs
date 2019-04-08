@@ -4,9 +4,9 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace Mocky.Test.helpers
+//namespace Mocky.helpers
 //{
-//    class CalcTest : ICalculator
+//    public class CalcTest : ICalculator
 //    {
 //        public int Add(int a, int b)
 //        {

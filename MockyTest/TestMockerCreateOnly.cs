@@ -4,6 +4,7 @@ using System.Net;
 using System.Collections.Generic;
 using Mocky;
 using Request;
+//using Mocky.helpers;
 
 namespace Mocky.Test
 {
@@ -15,10 +16,14 @@ namespace Mocky.Test
 
         public TestMockerCreateOnly()
         {
-            //Mocker mockCalc = new Mocker(typeof(ICalculator));
-            //calc = (ICalculator)mockCalc.Create();
+            Mocker mockCalc = new Mocker(typeof(ICalculator));
+            calc = (ICalculator)mockCalc.Create();
             Mocker mockReq = new Mocker(typeof(IHttpRequest));
             req = (IHttpRequest)mockReq.Create();
+
+
+            //Mocker mockReq = new Mocker(typeof(MockIHttpRequest));
+            //req = (helpers.IHttpRequest)mockReq.Create();
         }
 
         [TestMethod]

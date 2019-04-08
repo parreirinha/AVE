@@ -1,14 +1,20 @@
-﻿//using Request;
+﻿//using Mocky;
+//using Mocky.helpers;
 //using System;
 //using System.Collections.Generic;
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace Mocky.Test.helpers
-//{
-//    class HttpTest : IHttpRequest
+
+//    public class MockIHttpRequest : IHttpRequest
 //    {
+//        MockMethod[] ms;
+
+//        public MockIHttpRequest(MockMethod[] http)
+//        {
+//            ms = http;
+//        }
 //        public void Dispose()
 //        {
 //            throw new NotImplementedException();
@@ -19,4 +25,3 @@
 //            throw new NotImplementedException();
 //        }
 //    }
-//}
