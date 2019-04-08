@@ -10,6 +10,8 @@ namespace IlTestApp
     {
         //public TestClass() { }
 
+        Type type = typeof(TestClass);
+
         public int Add(int a, int b)
         {
             throw new NotImplementedException();
@@ -28,6 +30,11 @@ namespace IlTestApp
         public int Sub(int a, int b)
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return "Mock" + type.Name;
         }
     }
 }

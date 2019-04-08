@@ -19,17 +19,17 @@ namespace Mocky.Emiters
         private ConstructorBuilder cb;
         Type type;
 
-        public SimpleEmiter(Type type, string assemblyName, string typeName) {
+        public SimpleEmiter(Type type, string assemblyName) {
 
             aName = new AssemblyName(assemblyName);
             ab = AppDomain.CurrentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.RunAndSave);
             mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
-            tb = mb.DefineType(typeName, TypeAttributes.Public);
+            tb = mb.DefineType("Mock" + type.Name, TypeAttributes.Public);
             tb.AddInterfaceImplementation(type);
             this.type = type;
         }
 
-        public void BuildConstructorWithoutParameters()
+        public void BuildConstructorWithOneParameter()
         {
             Type[] parameterTypes = new Type[] { typeof(MockMethod[]) };//Type.EmptyTypes;
 
@@ -57,6 +57,19 @@ namespace Mocky.Emiters
 
         }
 
+        //public void BuildMethodsFlattenHierarchy()
+        //{
+        //    MethodInfo[] mi = type.GetMethods(BindingFlags.FlattenHierarchy);
+
+        //    if (mi.Length == 0)
+        //        return;
+
+        //    foreach (MethodInfo m in mi)
+        //    {
+        //        CreateMethod(m);
+        //    }
+        //}
+
         private void CreateMethod(MethodInfo mi)
         {
             MethodAttributes mAttributes =
@@ -75,10 +88,10 @@ namespace Mocky.Emiters
                     parameterType);
 
             ILGenerator il = mb.GetILGenerator();
-            ConstructorInfo ci = typeof(NotImplementedException).GetConstructor(Type.EmptyTypes);
+            ConstructorInfo ci = typeof(System.NotImplementedException).GetConstructor(Type.EmptyTypes);
 
             il.Emit(OpCodes.Newobj, ci);
-            il.Emit(OpCodes.Ret);
+            il.Emit(OpCodes.Throw);
         }
 
         private Type[] GetTypeArrayOfMethodParameter(MethodInfo mi)
@@ -99,5 +112,33 @@ namespace Mocky.Emiters
             ab.Save(aName.Name + ".dll");
             return type;
         }
+
+        //public void CreateToString()
+        //{
+        //    //MethodInfo mi = type.GetMethod("ToString", BindingFlags.FlattenHierarchy);
+
+        //    MethodAttributes mAttributes =
+        //        MethodAttributes.Public |
+        //        MethodAttributes.ReuseSlot |
+        //        MethodAttributes.HideBySig |
+        //        MethodAttributes.Virtual;
+
+        //    MethodBuilder mb = tb.DefineMethod(
+        //            "ToString",
+        //            mAttributes,
+        //            typeof(string),
+        //            Type.EmptyTypes);
+
+        //    ILGenerator il = mb.GetILGenerator();
+            
+        //    //il.Emit(OpCodes.Ldarg_0);
+        //    il.Emit(OpCodes.Ldstr, "Mock");
+        //    il.Emit(OpCodes.Ldstr, type.Name);
+        //    Type[] objectArgs = { typeof(object), typeof(object) };
+        //    il.Emit(OpCodes.Call, typeof(string).GetMethod("Concat", objectArgs));
+        //    il.Emit(OpCodes.Ret);
+        //}
+
+
     }
 }
