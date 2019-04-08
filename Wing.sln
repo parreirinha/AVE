@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mocky", "Mocky\Mocky.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockyTest", "MockyTest\MockyTest.csproj", "{91361E11-37B5-465C-A9CE-24ADE8342395}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmitTest", "EmitTest\EmitTest.csproj", "{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IlTestApp", "IlTestApp\IlTestApp.csproj", "{9918543A-B545-4E68-A904-3E5A4AE5068C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{91361E11-37B5-465C-A9CE-24ADE8342395}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91361E11-37B5-465C-A9CE-24ADE8342395}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91361E11-37B5-465C-A9CE-24ADE8342395}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8E6AD47-A92E-4C13-925C-A0C49B4A49EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9918543A-B545-4E68-A904-3E5A4AE5068C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9918543A-B545-4E68-A904-3E5A4AE5068C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9918543A-B545-4E68-A904-3E5A4AE5068C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9918543A-B545-4E68-A904-3E5A4AE5068C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

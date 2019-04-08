@@ -1,24 +1,15 @@
-using Mocky.Test;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmitTest
+namespace IlTestApp
 {
-    class Program
+    class TestClass : ICalcTest
     {
-        static void Main(string[] args)
-        {
+        //public TestClass() { }
 
- 
-        }
-    }
-
-
-    class MyClass : ICalculator
-    {
         public int Add(int a, int b)
         {
             throw new NotImplementedException();
