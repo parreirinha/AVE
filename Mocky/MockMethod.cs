@@ -48,8 +48,29 @@ namespace Mocky
         {
             // !!!!! TO DO !!!!!
 
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+
+            foreach(KeyValuePair<object[], object> pair in results)
+            {
+                Object[] arg = pair.Key;
+                Object val = pair.Value;
+                bool flag = true;
+
+                for(int i = 0; i < arg.Length; i++)
+                {
+                    if ((int)arg[i] != (int)args[i])
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+
+                if (flag)
+                    return val;
+            }
+            return 0;
         }
+
         
         private static bool areAllArgumentsCompatible(ParameterInfo[] argTypes, object[] args)
         {

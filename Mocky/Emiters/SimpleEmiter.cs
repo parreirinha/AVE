@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace Mocky.Emiters
 {
 
-
     public class SimpleEmiter
     {
         private AssemblyName aName;
@@ -64,14 +63,6 @@ namespace Mocky.Emiters
             }
 
             CreateMethodsFromInterfaceHierarchy(type);
-            //Type[] interfaces = type.GetInterfaces();
-
-            //if(interfaces.Length == 1)
-            //{
-            //    MethodInfo[] imethods = interfaces[0].GetMethods();
-            //    CreateMethod(imethods[0]);
-            //}
-
         }
 
         private void CreateMethodsFromInterfaceHierarchy(Type type)
@@ -130,6 +121,7 @@ namespace Mocky.Emiters
             {
                 res[i] = pi[i].ParameterType;
             }
+
             return res;
         }
 
@@ -139,33 +131,6 @@ namespace Mocky.Emiters
             ab.Save(aName.Name + ".dll");
             return type;
         }
-
-        //public void CreateToString()
-        //{
-        //    //MethodInfo mi = type.GetMethod("ToString", BindingFlags.FlattenHierarchy);
-
-        //    MethodAttributes mAttributes =
-        //        MethodAttributes.Public |
-        //        MethodAttributes.ReuseSlot |
-        //        MethodAttributes.HideBySig |
-        //        MethodAttributes.Virtual;
-
-        //    MethodBuilder mb = tb.DefineMethod(
-        //            "ToString",
-        //            mAttributes,
-        //            typeof(string),
-        //            Type.EmptyTypes);
-
-        //    ILGenerator il = mb.GetILGenerator();
-            
-        //    //il.Emit(OpCodes.Ldarg_0);
-        //    il.Emit(OpCodes.Ldstr, "Mock");
-        //    il.Emit(OpCodes.Ldstr, type.Name);
-        //    Type[] objectArgs = { typeof(object), typeof(object) };
-        //    il.Emit(OpCodes.Call, typeof(string).GetMethod("Concat", objectArgs));
-        //    il.Emit(OpCodes.Ret);
-        //}
-
 
     }
 }
