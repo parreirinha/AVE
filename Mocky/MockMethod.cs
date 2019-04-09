@@ -125,15 +125,23 @@ namespace Mocky
 
                 // object[] key = result.Key;
                 il.Emit(OpCodes.Ldloca, pair);
-                il.Emit(OpCodes.Call, typeof(KeyValuePair<object[], object>).GetMethod("get_Key");
+                il.Emit(OpCodes.Call, typeof(KeyValuePair<object[], object>).GetMethod("get_Key"));
                 il.Emit(OpCodes.Stloc, key);
 
                 // object value = result.Value;
+                il.Emit(OpCodes.Ldloca_S, pair);
+                il.Emit(OpCodes.Call, typeof(KeyValuePair<object[], object>).GetMethod("get_Key"));
+                il.Emit(OpCodes.Stloc, value);
 
                 // bool flag = true;
+                il.Emit(OpCodes.Ldc_I4, 1);
+                il.Emit(OpCodes.Stloc_S, flag);
 
                 // for (int i = 0; i < key.Length; i++)
+                il.Emit(OpCodes.Ldc_I4, 0);
+                il.Emit(OpCodes.Stloc_S, idx);
 
+                il.Emit(OpCodes.Br_S, loopStart);
                 // loop start (head: IL_005c)
 
                 // if ((int)key[i] != (int)args[i])
