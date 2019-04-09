@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Emiters\IlGeneratorProvider.cs" />
     <Compile Include="Emiters\SimpleEmiter.cs" />
     <Compile Include="helpers\CalcTest.cs" />
     <Compile Include="helpers\HttpTest.cs" />
     <Compile Include="helpers\ICalculator.cs" />
     <Compile Include="helpers\IHttpRequest.cs" />
+    <Compile Include="helpers\part3il.cs" />
     <Compile Include="Mocker.cs" />
     <Compile Include="MockMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
