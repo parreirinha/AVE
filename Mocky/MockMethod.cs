@@ -64,7 +64,7 @@ namespace Mocky
 
             //throw new NotImplementedException();
 
-            CallCreatorBuilder ccb = new CallCreatorBuilder(GetType());
+            CallCreatorBuilder ccb = new CallCreatorBuilder(GetType(), args);
             Type createdType = ccb.GetTypeWithCallMethod();
 
             object instance = Activator.CreateInstance(createdType, results);
