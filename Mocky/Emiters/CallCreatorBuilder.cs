@@ -97,7 +97,7 @@ namespace Mocky.Emiters
             LocalBuilder cmpObjA = il.DeclareLocal(typeof(object));                         // locals init [7]
             LocalBuilder cmpObjB = il.DeclareLocal(typeof(object));                         // locals init [8]
             LocalBuilder cmpResult = il.DeclareLocal(typeof(bool));                         // locals init [9]
-            LocalBuilder forExitCondition = il.DeclareLocal(typeof(bool));                   // locals init [10]
+            LocalBuilder forExitCondition = il.DeclareLocal(typeof(bool));                  // locals init [10]
             LocalBuilder flagVerification = il.DeclareLocal(typeof(bool));                  // locals init [11]
             LocalBuilder returnValue = il.DeclareLocal(typeof(object));                     // locals init [12]
 
@@ -129,7 +129,7 @@ namespace Mocky.Emiters
                 il.Emit(OpCodes.Ldloca_S, results);
                 //IL_0015: call instance valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<!0, !1> valuetype 
                 //[mscorlib]System.Collections.Generic.Dictionary`2/Enumerator<object[], object>::get_Current()
-                il.Emit(OpCodes.Call, typeof(Dictionary<object[], object>).GetMethod("get_Current"));   //é este o método ou enumerator???
+                il.Emit(OpCodes.Call, typeof(Dictionary<object[], object>.Enumerator).GetMethod("get_Current"));   //é este o método ou enumerator???
                 il.Emit(OpCodes.Stloc, pair);
 
                 // object[] key = result.Key;
@@ -166,7 +166,8 @@ namespace Mocky.Emiters
                 il.Emit(OpCodes.Ldloc_S, idx);
                 il.Emit(OpCodes.Ldelem_Ref);
                 il.Emit(OpCodes.Ldloc_S, type);
-                il.Emit(OpCodes.Call, typeof(Convert).GetMethod("ChangeType"));
+                il.Emit(OpCodes.Call, typeof(Convert)
+                    .GetMethod("ChangeType", new Type[] { typeof(object), typeof(Type)}));
                 il.Emit(OpCodes.Stloc, cmpObjA);
 
                 // object obj2 = Convert.ChangeType(args[i], type);
@@ -174,14 +175,16 @@ namespace Mocky.Emiters
                 il.Emit(OpCodes.Ldloc_S, idx);
                 il.Emit(OpCodes.Ldelem_Ref);
                 il.Emit(OpCodes.Ldloc_S, type);
-                il.Emit(OpCodes.Call, typeof(Convert).GetMethod("ChangeType"));
+                il.Emit(OpCodes.Call, typeof(Convert)
+                    .GetMethod("ChangeType", new Type[] { typeof(object), typeof(Type) }));
                 il.Emit(OpCodes.Stloc, cmpObjB);
 
 
                 // if (!obj.Equals(obj2))
                 il.Emit(OpCodes.Ldloc_S, cmpObjA);
                 il.Emit(OpCodes.Ldloc_S, cmpObjB);
-                il.Emit(OpCodes.Callvirt, typeof(Object).GetMethod("Equals"));
+                il.Emit(OpCodes.Callvirt, typeof(Object)
+                    .GetMethod("Equals", new Type[] { typeof(object), typeof(object) }));
                 il.Emit(OpCodes.Ldc_I4_0);
                 il.Emit(OpCodes.Ceq);
                 il.Emit(OpCodes.Stloc_S, cmpResult);
@@ -229,7 +232,7 @@ namespace Mocky.Emiters
                 // foreach (KeyValuePair<object[], object> result in results)             
                 il.MarkLabel(foreachEnd);
                 il.Emit(OpCodes.Ldloca_S, results);
-                il.Emit(OpCodes.Call, typeof(Dictionary<object[], object>).GetMethod("MoveNext"));
+                il.Emit(OpCodes.Call, typeof(Dictionary<object[], object>.Enumerator).GetMethod("MoveNext"));
                 il.Emit(OpCodes.Brtrue, foreachBegin);
 
                 // end loop
