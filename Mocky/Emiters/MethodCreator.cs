@@ -1,39 +1,54 @@
 ﻿//using System;
 //using System.Collections.Generic;
+//using System.Linq;
 //using System.Reflection;
 //using System.Reflection.Emit;
-
+//using System.Text;
+//using System.Threading.Tasks;
 
 //namespace Mocky.Emiters
 //{
-//    public class IlGeneratorProvider
+//    public class MethodCreator
 //    {
 //        private AssemblyName aName;
 //        private AssemblyBuilder ab;
 //        private ModuleBuilder mb;
 //        private TypeBuilder tb;
 //        private ConstructorBuilder cb;
-//        Type type;
+//        private MethodInfo mi;
+//        Dictionary<object[], object> results;
+//        //private Type type;
 
-//        public IlGeneratorProvider(Type type)
+
+//        public MethodCreator(MethodInfo mi, Dictionary<object[], object> results)
 //        {
-//            this.type = type;
-//            aName = new AssemblyName("IlGeneratorProvider");
+//            aName = new AssemblyName("MethodCallBuilder");
 //            ab = AppDomain.CurrentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.RunAndSave);
 //            mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
-//            tb = mb.DefineType(type.Name + "IlProvider", TypeAttributes.Public);
+//            tb = mb.DefineType("MethodCallBuilder", TypeAttributes.Public);
+//            this.mi = mi;
+//            this.results = results;
+
+//            ILGenerator il = GetMethodEmiter(mi);
+//            BuildCallMethod(il);
 //        }
 
-//        public ILGenerator GetMethodEmiter(MethodInfo mi)
+//        public Type CreateType()
+//        {
+//            Type type = tb.CreateType();
+//            ab.Save(aName.Name + ".dll");
+//            return type;
+//        }
+
+//        private ILGenerator GetMethodEmiter(MethodInfo mi)
 //        {
 //            MethodAttributes mAttributes = mi.Attributes;
 //            Type retType = mi.ReturnType;
 //            Type[] param = GetTypeArrayOfMethodParameter(mi);
-//            MethodBuilder mb = tb.DefineMethod("Il" + mi.Name, mAttributes, retType, param);
+//            MethodBuilder mb = tb.DefineMethod(mi.Name, mAttributes, retType, param);
 
 //            return mb.GetILGenerator();
 //        }
-
 
 //        private Type[] GetTypeArrayOfMethodParameter(MethodInfo mi)
 //        {
@@ -82,7 +97,7 @@
 
 //            // foreach (KeyValuePair<object[], object> result in results)
 //            il.Emit(OpCodes.Ldarg_0);
-//            il.Emit(OpCodes.Ldfld, this.GetType().GetField("results"));
+//            il.Emit(OpCodes.Ldfld, GetType().GetField("results"));
 //            il.Emit(OpCodes.Callvirt, typeof(Dictionary<object[], object>).GetMethod("GetEnumerator"));
 //            il.Emit(OpCodes.Stloc, results);
 
@@ -214,6 +229,7 @@
 //            il.MarkLabel(retLabel);
 //            il.Emit(OpCodes.Ldloca_S, returnValue);
 //            il.Emit(OpCodes.Ret);
+
 //        }
 //    }
 //}

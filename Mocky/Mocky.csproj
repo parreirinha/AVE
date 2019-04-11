@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Emiters\CallCreatorBuilder.cs" />
     <Compile Include="Emiters\IlGeneratorProvider.cs" />
+    <Compile Include="Emiters\MethodBuilderTest.cs" />
+    <Compile Include="Emiters\MethodCreator.cs" />
     <Compile Include="Emiters\SimpleEmiter.cs" />
     <Compile Include="helpers\CalcTest.cs" />
     <Compile Include="helpers\HttpTest.cs" />

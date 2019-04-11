@@ -1,0 +1,196 @@
+.class public auto ansi beforefieldinit Mocky.Emiters.MethodBuilderTest
+	extends [mscorlib]System.Object
+{
+	// Fields
+	.field private class [mscorlib]System.Collections.Generic.Dictionary`2<object[], object> results
+
+	// Methods
+	.method public hidebysig specialname rtspecialname 
+		instance void .ctor (
+			class [mscorlib]System.Collections.Generic.Dictionary`2<object[], object> results
+		) cil managed 
+	{
+		// Method begins at RVA 0x2309
+		// Code size 16 (0x10)
+		.maxstack 8
+
+		// (no C# code)
+		IL_0000: ldarg.0
+		IL_0001: call instance void [mscorlib]System.Object::.ctor()
+		IL_0006: nop
+		IL_0007: nop
+		// this.results = results;
+		IL_0008: ldarg.0
+		IL_0009: ldarg.1
+		IL_000a: stfld class [mscorlib]System.Collections.Generic.Dictionary`2<object[], object> Mocky.Emiters.MethodBuilderTest::results
+		// (no C# code)
+		IL_000f: ret
+	} // end of method MethodBuilderTest::.ctor
+
+	.method public hidebysig 
+		instance object Call (
+			object[] args
+		) cil managed 
+	{
+		.param [1]
+		.custom instance void [mscorlib]System.ParamArrayAttribute::.ctor() = (
+			01 00 00 00
+		)
+		// Method begins at RVA 0x231c
+		// Code size 190 (0xbe)
+		.maxstack 2
+		.locals init (
+			[0] valuetype [mscorlib]System.Collections.Generic.Dictionary`2/Enumerator<object[], object>,
+			[1] valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<object[], object>,
+			[2] object[],
+			[3] object,
+			[4] bool,
+			[5] int32,
+			[6] class [mscorlib]System.Type,
+			[7] object,
+			[8] object,
+			[9] bool,
+			[10] bool,
+			[11] bool,
+			[12] object
+		)
+
+		// (no C# code)
+		IL_0000: nop
+		IL_0001: nop
+		// foreach (KeyValuePair<object[], object> result in results)
+		IL_0002: ldarg.0
+		IL_0003: ldfld class [mscorlib]System.Collections.Generic.Dictionary`2<object[], object> Mocky.Emiters.MethodBuilderTest::results
+		IL_0008: callvirt instance valuetype [mscorlib]System.Collections.Generic.Dictionary`2/Enumerator<!0, !1> class [mscorlib]System.Collections.Generic.Dictionary`2<object[], object>::GetEnumerator()
+		// (no C# code)
+		IL_000d: stloc.0
+		.try
+		{
+			IL_000e: br IL_0094
+			// loop start (head: IL_0094)
+				// foreach (KeyValuePair<object[], object> result in results)
+				IL_0013: ldloca.s 0
+				IL_0015: call instance valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<!0, !1> valuetype [mscorlib]System.Collections.Generic.Dictionary`2/Enumerator<object[], object>::get_Current()
+				// (no C# code)
+				IL_001a: stloc.1
+				IL_001b: nop
+				// object[] key = result.Key;
+				IL_001c: ldloca.s 1
+				IL_001e: call instance !0 valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<object[], object>::get_Key()
+				IL_0023: stloc.2
+				// object value = result.Value;
+				IL_0024: ldloca.s 1
+				IL_0026: call instance !1 valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<object[], object>::get_Value()
+				IL_002b: stloc.3
+				// bool flag = true;
+				IL_002c: ldc.i4.1
+				IL_002d: stloc.s 4
+				// for (int i = 0; i < key.Length; i++)
+				IL_002f: ldc.i4.0
+				IL_0030: stloc.s 5
+				// (no C# code)
+				IL_0032: br.s IL_0079
+				// loop start (head: IL_0079)
+					IL_0034: nop
+					// Type type = args[i].GetType();
+					IL_0035: ldarg.1
+					IL_0036: ldloc.s 5
+					IL_0038: ldelem.ref
+					IL_0039: callvirt instance class [mscorlib]System.Type [mscorlib]System.Object::GetType()
+					IL_003e: stloc.s 6
+					// object obj = Convert.ChangeType(key[i], type);
+					IL_0040: ldloc.2
+					IL_0041: ldloc.s 5
+					IL_0043: ldelem.ref
+					IL_0044: ldloc.s 6
+					IL_0046: call object [mscorlib]System.Convert::ChangeType(object, class [mscorlib]System.Type)
+					IL_004b: stloc.s 7
+					// object obj2 = Convert.ChangeType(args[i], type);
+					IL_004d: ldarg.1
+					IL_004e: ldloc.s 5
+					IL_0050: ldelem.ref
+					IL_0051: ldloc.s 6
+					IL_0053: call object [mscorlib]System.Convert::ChangeType(object, class [mscorlib]System.Type)
+					IL_0058: stloc.s 8
+					// if (!obj.Equals(obj2))
+					IL_005a: ldloc.s 7
+					IL_005c: ldloc.s 8
+					IL_005e: callvirt instance bool [mscorlib]System.Object::Equals(object)
+					IL_0063: ldc.i4.0
+					IL_0064: ceq
+					IL_0066: stloc.s 9
+					// (no C# code)
+					IL_0068: ldloc.s 9
+					IL_006a: brfalse.s IL_0072
+
+					IL_006c: nop
+					// flag = false;
+					IL_006d: ldc.i4.0
+					IL_006e: stloc.s 4
+					// (no C# code)
+					IL_0070: br.s IL_0086
+
+					IL_0072: nop
+					// for (int i = 0; i < key.Length; i++)
+					IL_0073: ldloc.s 5
+					IL_0075: ldc.i4.1
+					IL_0076: add
+					IL_0077: stloc.s 5
+
+					// for (int i = 0; i < key.Length; i++)
+					IL_0079: ldloc.s 5
+					IL_007b: ldloc.2
+					IL_007c: ldlen
+					IL_007d: conv.i4
+					IL_007e: clt
+					IL_0080: stloc.s 10
+					// (no C# code)
+					IL_0082: ldloc.s 10
+					IL_0084: brtrue.s IL_0034
+				// end loop
+
+				// if (flag)
+				IL_0086: ldloc.s 4
+				IL_0088: stloc.s 11
+				// (no C# code)
+				IL_008a: ldloc.s 11
+				IL_008c: brfalse.s IL_0093
+
+				// return value;
+				IL_008e: ldloc.3
+				IL_008f: stloc.s 12
+				// (no C# code)
+				IL_0091: leave.s IL_00bb
+
+				IL_0093: nop
+
+				// foreach (KeyValuePair<object[], object> result in results)
+				IL_0094: ldloca.s 0
+				IL_0096: call instance bool valuetype [mscorlib]System.Collections.Generic.Dictionary`2/Enumerator<object[], object>::MoveNext()
+				// (no C# code)
+				IL_009b: brtrue IL_0013
+			// end loop
+
+			IL_00a0: leave.s IL_00b1
+		} // end .try
+		finally
+		{
+			IL_00a2: ldloca.s 0
+			IL_00a4: constrained. valuetype [mscorlib]System.Collections.Generic.Dictionary`2/Enumerator<object[], object>
+			IL_00aa: callvirt instance void [mscorlib]System.IDisposable::Dispose()
+			IL_00af: nop
+			IL_00b0: endfinally
+		} // end handler
+
+		// return 0;
+		IL_00b1: ldc.i4.0
+		IL_00b2: box [mscorlib]System.Int32
+		IL_00b7: stloc.s 12
+		// (no C# code)
+		IL_00b9: br.s IL_00bb
+
+		IL_00bb: ldloc.s 12
+		IL_00bd: ret
+	} // end of method MethodBuilderTest::Call
+
+} // end of class Mocky.Emiters.MethodBuilderTest
