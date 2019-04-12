@@ -90,7 +90,7 @@ namespace Mocky.Emiters
             ILGenerator il = mb.GetILGenerator();      
 
             //local variables
-            LocalBuilder dictionary = il.DeclareLocal(typeof(Dictionary<object[], object>));   // locals init [0]
+            LocalBuilder dictionary = il.DeclareLocal(typeof(Dictionary<object[], object>.Enumerator));   // locals init [0]
             LocalBuilder pair = il.DeclareLocal(typeof(KeyValuePair<object[], object>));    // locals init [1]
             LocalBuilder key = il.DeclareLocal(typeof(object[]));                           // locals init [2]
             LocalBuilder value = il.DeclareLocal(typeof(object));                           // locals init [3]
@@ -121,15 +121,16 @@ namespace Mocky.Emiters
             //il.Emit(OpCodes.Ldfld, GetType().GetField("results"));
             il.Emit(OpCodes.Ldfld, results);
             il.Emit(OpCodes.Callvirt, typeof(Dictionary<object[], object>).GetMethod("GetEnumerator"));
-            il.Emit(OpCodes.Stloc, results);
+            il.Emit(OpCodes.Stloc, dictionary);
 
+            
             try
             {
                 il.Emit(OpCodes.Br, foreachEnd);
 
                 il.MarkLabel(foreachBegin);
                 // foreach (KeyValuePair<object[], object> result in results)
-                il.Emit(OpCodes.Ldloca, results);
+                il.Emit(OpCodes.Ldloca, dictionary);
                 //IL_0015: call instance valuetype [mscorlib]System.Collections.Generic.KeyValuePair`2<!0, !1> valuetype 
                 //[mscorlib]System.Collections.Generic.Dictionary`2/Enumerator<object[], object>::get_Current()
                 il.Emit(OpCodes.Call, typeof(Dictionary<object[], object>.Enumerator).GetMethod("get_Current"));   //é este o método ou enumerator???
@@ -150,109 +151,113 @@ namespace Mocky.Emiters
                 il.Emit(OpCodes.Stloc, flag);
 
                 // for (int i = 0; i < key.Length; i++)
-                il.Emit(OpCodes.Ldc_I4, 0);
+                il.Emit(OpCodes.Ldc_I4_0);
                 il.Emit(OpCodes.Stloc, idx);
 
                 il.Emit(OpCodes.Br, forStopCondition);   //IL_0079
                                                            // loop start (head: IL_0079)
 
                 il.MarkLabel(forBegin);                     // IL_0034
-                                                            // Type type = args[i].GetType();
+                // Type type = args[i].GetType();
                 il.Emit(OpCodes.Ldarg_1);
-                il.Emit(OpCodes.Ldloca, idx);
+                il.Emit(OpCodes.Ldloca_S, idx);
                 il.Emit(OpCodes.Ldelem_Ref);
                 il.Emit(OpCodes.Callvirt, typeof(object).GetType());
-                il.Emit(OpCodes.Stloc, type);
+                il.Emit(OpCodes.Stloc_S, type);
 
                 // object obj = Convert.ChangeType(key[i], type);
                 il.Emit(OpCodes.Ldloca, key);
-                il.Emit(OpCodes.Ldloc, idx);
+                il.Emit(OpCodes.Ldloc_S, idx);
                 il.Emit(OpCodes.Ldelem_Ref);
-                il.Emit(OpCodes.Ldloc, type);
+                il.Emit(OpCodes.Ldloc_S, type);
                 il.Emit(OpCodes.Call, typeof(Convert)
                     .GetMethod("ChangeType", new Type[] { typeof(object), typeof(Type)}));
-                il.Emit(OpCodes.Stloc, cmpObjA);
+                il.Emit(OpCodes.Stloc_S, cmpObjA);
 
                 // object obj2 = Convert.ChangeType(args[i], type);
                 il.Emit(OpCodes.Ldarg_1);
-                il.Emit(OpCodes.Ldloc, idx);
+                il.Emit(OpCodes.Ldloc_S, idx);
                 il.Emit(OpCodes.Ldelem_Ref);
-                il.Emit(OpCodes.Ldloc, type);
+                il.Emit(OpCodes.Ldloc_S, type);
                 il.Emit(OpCodes.Call, typeof(Convert)
                     .GetMethod("ChangeType", new Type[] { typeof(object), typeof(Type) }));
                 il.Emit(OpCodes.Stloc, cmpObjB);
 
 
                 // if (!obj.Equals(obj2))
-                il.Emit(OpCodes.Ldloc, cmpObjA);
-                il.Emit(OpCodes.Ldloc, cmpObjB);
+                il.Emit(OpCodes.Ldloc_S, cmpObjA);
+                il.Emit(OpCodes.Ldloc_S, cmpObjB);
                 il.Emit(OpCodes.Callvirt, typeof(Object)
-                    .GetMethod("Equals", new Type[] { typeof(object), typeof(object) }));
+                    .GetMethod("Equals", new Type[] { typeof(object) }));
+                    //.GetMethod("Equals", new Type[] { typeof(object), typeof(object) }));
                 il.Emit(OpCodes.Ldc_I4_0);
                 il.Emit(OpCodes.Ceq);
-                il.Emit(OpCodes.Stloc, cmpResult);
-                il.Emit(OpCodes.Ldloc, cmpResult);
-                il.Emit(OpCodes.Brfalse, ifNotEquals);
+                il.Emit(OpCodes.Stloc_S, cmpResult);
+                il.Emit(OpCodes.Ldloc_S, cmpResult);
+                il.Emit(OpCodes.Brfalse_S, ifNotEquals);
 
 
                 // flag = false;
                 il.Emit(OpCodes.Ldc_I4_0);
-                il.Emit(OpCodes.Stloc, flag);
-                il.Emit(OpCodes.Br, ifFind);
+                il.Emit(OpCodes.Stloc_S, flag);
+                il.Emit(OpCodes.Br_S, ifFind);
 
                 // for (int i = 0; i < key.Length; i++)
                 il.MarkLabel(ifNotEquals);
-                il.Emit(OpCodes.Ldloc, idx);
+                il.Emit(OpCodes.Ldloc_S, idx);
                 il.Emit(OpCodes.Ldc_I4_1);
                 il.Emit(OpCodes.Add);
-                il.Emit(OpCodes.Stloc, idx);
+                il.Emit(OpCodes.Stloc_S, idx);
 
                 // for (int i = 0; i < key.Length; i++)
                 il.MarkLabel(forStopCondition); //IL_0079
-                il.Emit(OpCodes.Ldloc, idx);
+                il.Emit(OpCodes.Ldloc_S, idx);
                 il.Emit(OpCodes.Ldloc, key);
                 il.Emit(OpCodes.Ldlen);
                 il.Emit(OpCodes.Conv_I4);
                 il.Emit(OpCodes.Clt);
-                il.Emit(OpCodes.Stloc, forExitCondition);
-                il.Emit(OpCodes.Ldloc, forExitCondition);
-                il.Emit(OpCodes.Brtrue, forBegin);
+                il.Emit(OpCodes.Stloc_S, forExitCondition);
+                il.Emit(OpCodes.Ldloc_S, forExitCondition);
+                il.Emit(OpCodes.Brtrue_S, forBegin);
                 // end loop
 
                 // if (flag)
                 il.MarkLabel(ifFind);
-                il.Emit(OpCodes.Ldloc, flag);
-                il.Emit(OpCodes.Stloc, flagVerification);
-                il.Emit(OpCodes.Ldloc, flagVerification);
-                il.Emit(OpCodes.Brfalse, foreachVerification);    //IL_0093
+                il.Emit(OpCodes.Ldloc_S, flag);
+                il.Emit(OpCodes.Stloc_S, flagVerification);
+                il.Emit(OpCodes.Ldloc_S, flagVerification);
+                il.Emit(OpCodes.Brfalse_S, foreachVerification);    //IL_0093
 
                 // return value;
-                il.Emit(OpCodes.Ldloca, value);
-                il.Emit(OpCodes.Stloc, returnValue);
-                il.Emit(OpCodes.Leave, retLabel); //IL_00bb
+                il.Emit(OpCodes.Ldloc, value);
+                il.Emit(OpCodes.Stloc_S, returnValue);
+                il.Emit(OpCodes.Leave_S, retLabel); //IL_00bb
                 il.MarkLabel(foreachVerification);
 
                 // foreach (KeyValuePair<object[], object> result in results)             
                 il.MarkLabel(foreachEnd);
-                il.Emit(OpCodes.Ldloca, results);
+                il.Emit(OpCodes.Ldloca, dictionary);
                 il.Emit(OpCodes.Call, typeof(Dictionary<object[], object>.Enumerator).GetMethod("MoveNext"));
                 il.Emit(OpCodes.Brtrue, foreachBegin);
 
                 // end loop
-                il.Emit(OpCodes.Leave, leaveForeach);
-            }
+                il.Emit(OpCodes.Leave_S, leaveForeach);
+            }          
             finally
             {
-                il.Emit(OpCodes.Ldloca, results);
-                il.Emit(OpCodes.Constrained, typeof(Dictionary<object[], object>)); //IL_00a4: constrained.valuetype[mscorlib] System.Collections.Generic.Dictionary`2 / Enumerator<object[], object>
+                //il.BeginFinallyBlock();
+                il.Emit(OpCodes.Ldloca_S, dictionary);
+                il.Emit(OpCodes.Constrained, typeof(Dictionary<object[], object>.Enumerator)); //IL_00a4: constrained.valuetype[mscorlib] System.Collections.Generic.Dictionary`2 / Enumerator<object[], object>
                 il.Emit(OpCodes.Callvirt, typeof(IDisposable).GetMethod("Dispose"));
-                il.Emit(OpCodes.Endfinally);
+                //il.Emit(OpCodes.Endfinally);
             }
+            
 
             il.MarkLabel(leaveForeach);
             il.Emit(OpCodes.Ldc_I4_0);
             il.Emit(OpCodes.Box, typeof(Int32));
-            il.Emit(OpCodes.Stloc, returnValue);
+            il.Emit(OpCodes.Stloc_S, returnValue);
+            il.Emit(OpCodes.Br_S, retLabel);
             il.MarkLabel(retLabel);
             il.Emit(OpCodes.Ldloc, returnValue);
             il.Emit(OpCodes.Ret);
