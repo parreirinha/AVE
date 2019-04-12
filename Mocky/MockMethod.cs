@@ -64,18 +64,40 @@ namespace Mocky
 
             //throw new NotImplementedException();
 
-            CallCreatorBuilder ccb = new CallCreatorBuilder(GetType(), args);
-            Type createdType = ccb.GetTypeWithCallMethod();
-
-            object instance = Activator.CreateInstance(createdType, results);
-            MethodInfo methodInfo = createdType.GetMethod("Call");
-
-            Object res = methodInfo.Invoke(instance, args);
-
-            return res;
+            //CallCreatorBuilder ccb = new CallCreatorBuilder(GetType(), args);
+            //Type createdType = ccb.GetTypeWithCallMethod();
+            //object instance = Activator.CreateInstance(createdType, results);
+            //MethodInfo methodInfo = createdType.GetMethod("Call");
+            //Object res = methodInfo.Invoke(instance, args);
+            //return res;
 
             //MethodBuilderTest mbt = new MethodBuilderTest(results);
             //return mbt.Call(args);
+
+            foreach (KeyValuePair<object[], object> pair in results)
+            {
+                Object[] arg = pair.Key;
+                Object val = pair.Value;
+                bool find = true;
+
+                for (int i = 0; i < arg.Length; i++)
+                {
+                    Type t = (arg[i]).GetType();
+
+                    var a = arg[i];
+                    var b = Convert.ChangeType(args[i], t);
+
+                    if (!a.Equals(b))
+                    {
+                        find = false;
+                        break;
+                    }
+                }
+
+                if (find)
+                    return val;
+            }
+            return 0;
 
         }
     }

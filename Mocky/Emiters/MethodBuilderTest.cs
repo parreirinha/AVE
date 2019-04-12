@@ -26,9 +26,10 @@ namespace Mocky.Emiters
 
                 for (int i = 0; i < arg.Length; i++)
                 {
-                    Type t = (args[i]).GetType();
+                    Type t = (arg[i]).GetType();
 
-                    var a = Convert.ChangeType(arg[i], t);
+                    //var a = Convert.ChangeType(arg[i], t);
+                    var a = arg[i];
                     var b = Convert.ChangeType(args[i], t);
 
                     if (!a.Equals(b))
