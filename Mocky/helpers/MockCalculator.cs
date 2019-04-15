@@ -18,34 +18,23 @@ namespace Mocky.helpers
 
         public int Add(int a, int b)
         {
-            
-            MethodBase currentMethodInfo = MethodBase.GetCurrentMethod();         
-       
-            object[] mockMethodKey = BuildParametersObjectArray(a, b);
-
-            MockMethod mockMethod = Contains(currentMethodInfo.Name, mockMethodKey);
-
-            if(mockMethod == null)
-                throw new NotImplementedException();
-
-            return (int) mockMethod.Call(mockMethodKey);
-
+            return (int) InvokeMethod("Add", a, b);
         }
 
 
         public int Div(int a, int b)
         {
-            throw new NotImplementedException();
+            return (int)InvokeMethod("Div", a, b);
         }
 
         public int Mul(int a, int b)
         {
-            throw new NotImplementedException();
+            return (int)InvokeMethod("Mul", a, b);
         }
 
         public int Sub(int a, int b)
         {
-            throw new NotImplementedException();
+            return (int)InvokeMethod("Sub", a, b);
         }
 
 

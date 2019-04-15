@@ -39,13 +39,14 @@ namespace Mocky
             // !!!!!! TO DO !!!!!!
             //throw new NotImplementedException();
 
-            //SimpleEmiter emiter = new SimpleEmiter(klass, "DynamicAssembly");
-            //emiter.BuildConstructorWithOneParameter();
-            //emiter.BuildMethods();
-            //Type createdType = emiter.CreateType();
+            SimpleEmiter emiter = new SimpleEmiter(klass, "DynamicAssembly");
+            emiter.BuildConstructorWithOneParameter();
+            emiter.BuildMethods();
+            Type createdType = emiter.CreateType();
 
-            //return createdType;
-            return typeof(helpers.MockCalculator);
+            return createdType;
+
+            //return typeof(helpers.MockCalculator);
         }
 
         private Type[] GetParamTypes(ParameterInfo[] pi)

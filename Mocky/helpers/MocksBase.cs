@@ -16,9 +16,14 @@ namespace Mocky.helpers
             this.ms = ms;
         }
 
-        protected MockMethod Contains(string methodName, params object[] args)
+        public int InvokeMethod(string methodName, params object[] args)
         {
-            return null;
+            foreach(MockMethod mockMethod in ms)
+            {
+                if (mockMethod.Method.Name == methodName)
+                    return (int) mockMethod.Call(args);
+            }
+            throw new NotImplementedException();
         }
 
         protected object[] BuildParametersObjectArray(params object[] param)

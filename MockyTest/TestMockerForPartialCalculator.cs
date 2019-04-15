@@ -6,15 +6,15 @@ namespace Mocky.Test
     [TestClass]
     public class TestMockerForPartialCalculator
     {
-        readonly helpers.ICalculator calc;
+        readonly ICalculator calc;
 
         public TestMockerForPartialCalculator()
         {
-            Mocker mock = new Mocker(typeof(helpers.ICalculator));
+            Mocker mock = new Mocker(typeof(ICalculator));
             mock.When("Add").With(5, 7).Return(12);
             mock.When("Add").With(3, 4).Return(7);
             mock.When("Mul").With(3, 3).Return(9);
-            calc = (helpers.ICalculator)mock.Create();
+            calc = (ICalculator)mock.Create();
         }
         
         [TestMethod]

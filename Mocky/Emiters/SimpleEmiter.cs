@@ -19,7 +19,7 @@ namespace Mocky.Emiters
             aName = new AssemblyName(assemblyName);
             ab = AppDomain.CurrentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.RunAndSave);
             mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
-            tb = mb.DefineType("Mock" + type.Name, TypeAttributes.Public);
+            tb = mb.DefineType("Mock" + type.Name, TypeAttributes.Public | TypeAttributes.Class, typeof(helpers.MocksBase));
             tb.AddInterfaceImplementation(type);
 
             Type[] interfaces = type.GetInterfaces();
@@ -41,11 +41,24 @@ namespace Mocky.Emiters
                 parameterTypes);
 
             ILGenerator il = cb.GetILGenerator();
-            ConstructorInfo ci = typeof(object).GetConstructor(Type.EmptyTypes);
+            //ConstructorInfo ci = typeof(object).GetConstructor(Type.EmptyTypes);
+
+            //il.Emit(OpCodes.Ldarg_0);
+            //il.Emit(OpCodes.Call, ci);
+            //il.Emit(OpCodes.Ret);
+
+            //   IL_0000: ldarg.0
+            //   IL_0001: ldarg.1
+            //   IL_0002: call instance void Mocky.helpers.MocksBase::.ctor(class Mocky.MockMethod[])
+            //  IL_0007: nop
 
             il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldarg_1);
+
+            ConstructorInfo ci = typeof(helpers.MocksBase).GetConstructor(parameterTypes);
             il.Emit(OpCodes.Call, ci);
             il.Emit(OpCodes.Ret);
+
         }
 
         public void BuildMethods()
@@ -98,10 +111,69 @@ namespace Mocky.Emiters
                     parameterType);
 
             ILGenerator il = mb.GetILGenerator();
-            ConstructorInfo ci = typeof(System.NotImplementedException).GetConstructor(Type.EmptyTypes);
+            //ConstructorInfo ci = typeof(System.NotImplementedException).GetConstructor(Type.EmptyTypes);
 
-            il.Emit(OpCodes.Newobj, ci);
-            il.Emit(OpCodes.Throw);
+            //il.Emit(OpCodes.Newobj, ci);
+            //il.Emit(OpCodes.Throw);
+
+            // return InvokeMethod("Add", a, b);
+            //IL_0001: ldarg.0
+            //IL_0002: ldstr "Add"
+            //// (no C# code)
+            //IL_0007: ldc.i4.2
+            //IL_0008: newarr[mscorlib]System.Object
+            //IL_000d: dup
+            //IL_000e: ldc.i4.0
+            //IL_000f: ldarg.1
+            //IL_0010: box[mscorlib]System.Int32
+            //IL_0015: stelem.ref
+            //IL_0016: dup
+            //IL_0017: ldc.i4.1
+            //IL_0018: ldarg.2
+            //IL_0019: box[mscorlib]System.Int32
+            //IL_001e: stelem.ref
+            //IL_001f: call instance int32 Mocky.helpers.MocksBase::InvokeMethod(string, object[])
+            //IL_0024: stloc.0
+            //IL_0025: br.s IL_0027
+            //IL_0027: ldloc.0
+            //IL_0028: ret
+
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldstr, mi.Name);
+
+            int numberOfParamatersInMethod = mi.GetParameters().Length;
+
+            il.Emit(OpCodes.Ldc_I4, numberOfParamatersInMethod);
+            il.Emit(OpCodes.Newarr, typeof(object));
+
+            PushParameterArgumentsToObjectArray(il, mi);
+
+            il.Emit(OpCodes.Call, typeof(helpers.MocksBase).GetMethod("InvokeMethod"));
+            il.Emit(OpCodes.Stloc_0);
+            il.Emit(OpCodes.Ldloc_0);
+            il.Emit(OpCodes.Ret);
+        }
+
+        private void PushParameterArgumentsToObjectArray(ILGenerator il, MethodInfo mi)
+        {
+            //IL_000e: ldc.i4.0
+            //IL_000f: ldarg.1
+            //IL_0010: box[mscorlib]System.Int32
+            //IL_0015: stelem.ref
+
+            ParameterInfo[] pi = mi.GetParameters();
+
+            int numberOfParameters = mi.GetParameters().Length;
+            for(int i = 0; i < numberOfParameters; i++)
+            {
+                il.Emit(OpCodes.Dup);
+                il.Emit(OpCodes.Ldc_I4, i);
+                il.Emit(OpCodes.Ldarg, i + 1);
+                il.Emit(OpCodes.Box, pi[i].ParameterType);
+                il.Emit(OpCodes.Stelem_Ref);
+            }
+
         }
 
         private Type[] GetTypeArrayOfMethodParameter(MethodInfo mi)
