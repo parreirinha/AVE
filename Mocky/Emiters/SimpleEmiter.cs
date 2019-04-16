@@ -12,7 +12,6 @@ namespace Mocky.Emiters
         private ModuleBuilder mb;
         private TypeBuilder tb;
         private ConstructorBuilder cb;
-        private FieldBuilder callReturnValue;
         Type type;
 
         public SimpleEmiter(Type type, string assemblyName) {
@@ -57,6 +56,23 @@ namespace Mocky.Emiters
 
         }
 
+        public void BuildConstructorWithNoParameters()
+        {
+            Type[] parameterTypes = new Type[] { typeof(MockMethod[]) };//Type.EmptyTypes;
+
+            cb = tb.DefineConstructor(
+                MethodAttributes.Public,
+                CallingConventions.Standard,
+                parameterTypes);
+
+            ILGenerator il = cb.GetILGenerator();
+            ConstructorInfo ci = typeof(object).GetConstructor(Type.EmptyTypes);
+
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Call, ci);
+            il.Emit(OpCodes.Ret);
+        }
+
         public void BuildMethods()
         {
 
@@ -84,9 +100,34 @@ namespace Mocky.Emiters
 
                 foreach(MethodInfo mi in iMethods)
                 {
-                    CreateMethod(mi);       
+                    //CreateMethod(mi);
+                    CreateMethodThatTthrowsNotImplementedException(mi); //dispose throws NotImplementedException
                 }
             }
+        }
+
+        //Created for dispose in part4
+        private void CreateMethodThatTthrowsNotImplementedException(MethodInfo mi)
+        {
+            MethodAttributes mAttributes =
+                    MethodAttributes.Public |
+                    MethodAttributes.ReuseSlot |
+                    MethodAttributes.HideBySig |
+                    MethodAttributes.Virtual;
+
+            Type retType = mi.ReturnType;
+            Type[] parameterType = GetTypeArrayOfMethodParameter(mi);
+
+            MethodBuilder mb = tb.DefineMethod(
+                    mi.Name,
+                    mAttributes,
+                    retType,
+                    parameterType);
+
+            ILGenerator il = mb.GetILGenerator();
+            ConstructorInfo ci = typeof(System.NotImplementedException).GetConstructor(Type.EmptyTypes);
+            il.Emit(OpCodes.Newobj, ci);
+            il.Emit(OpCodes.Throw);
         }
 
         private void CreateMethod(MethodInfo mi)
@@ -107,38 +148,11 @@ namespace Mocky.Emiters
                     parameterType);
 
             ILGenerator il = mb.GetILGenerator();
-            //ConstructorInfo ci = typeof(System.NotImplementedException).GetConstructor(Type.EmptyTypes);
-
-            //il.Emit(OpCodes.Newobj, ci);
-            //il.Emit(OpCodes.Throw);
-
-            // return InvokeMethod("Add", a, b);
-            //IL_0001: ldarg.0
-            //IL_0002: ldstr "Add"
-            //// (no C# code)
-            //IL_0007: ldc.i4.2
-            //IL_0008: newarr[mscorlib]System.Object
-            //IL_000d: dup
-            //IL_000e: ldc.i4.0
-            //IL_000f: ldarg.1
-            //IL_0010: box[mscorlib]System.Int32
-            //IL_0015: stelem.ref
-            //IL_0016: dup
-            //IL_0017: ldc.i4.1
-            //IL_0018: ldarg.2
-            //IL_0019: box[mscorlib]System.Int32
-            //IL_001e: stelem.ref
-            //IL_001f: call instance int32 Mocky.helpers.MocksBase::InvokeMethod(string, object[])
-            //IL_0024: stloc.0
-            //IL_0025: br.s IL_0027
-            //IL_0027: ldloc.0
-            //IL_0028: ret
-
 
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldstr, mi.Name);
 
-            int numberOfParamatersInMethod = mi.GetParameters().Length;
+            int numberOfParamatersInMethod = mi.GetParameters().Length; // number of parameters for object[] args
 
             il.Emit(OpCodes.Ldc_I4, numberOfParamatersInMethod);
             il.Emit(OpCodes.Newarr, typeof(object));
@@ -146,15 +160,11 @@ namespace Mocky.Emiters
             PushParameterArgumentsToObjectArray(il, mi);
 
             il.Emit(OpCodes.Call, typeof(helpers.MocksBase).GetMethod("InvokeMethod"));
-
-
-            callReturnValue = tb.DefineField("res", retType, FieldAttributes.Private);
-
-            il.Emit(OpCodes.Stloc, callReturnValue);
-            il.Emit(OpCodes.Ldloc, callReturnValue);
+            
             il.Emit(OpCodes.Ret);
         }
 
+        // consoante o numero de parametros do array, preenche-o
         private void PushParameterArgumentsToObjectArray(ILGenerator il, MethodInfo mi)
         {
             ParameterInfo[] pi = mi.GetParameters();
