@@ -23,7 +23,7 @@ namespace Mocky.Test
         {
             Assert.AreEqual(req.GetBody("www.somerequest.com"), "response");
             Assert.AreEqual(req.GetBody("www.anotherrequest.com"), "anotherresponse");
-            //Assert.AreEqual(req.GetBody("www.notDifinedRequest.com"), 0);
+            Assert.AreEqual(req.GetBody("www.notDifinedRequest.com"), 0); //when returns 0 the cast throws an exception
         }
 
         [TestMethod]

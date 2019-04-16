@@ -160,7 +160,10 @@ namespace Mocky.Emiters
             PushParameterArgumentsToObjectArray(il, mi);
 
             il.Emit(OpCodes.Call, typeof(helpers.MocksBase).GetMethod("InvokeMethod"));
-            il.Emit(OpCodes.Unbox_Any, mi.ReturnType);
+
+            if(mi.ReturnType.IsValueType)       // se for value type é necessário fazer unbox para o seu tipo
+                il.Emit(OpCodes.Unbox_Any, mi.ReturnType);
+
             il.Emit(OpCodes.Ret);
         }
 
