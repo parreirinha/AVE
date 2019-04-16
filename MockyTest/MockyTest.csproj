@@ -52,6 +52,7 @@
     <Compile Include="TestMockerCreateOnly.cs" />
     <Compile Include="TestMockerForPartialCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestMockerForPartialHttpRequest.cs" />
     <Compile Include="TestMockMethod.cs" />
   </ItemGroup>
   <ItemGroup>
