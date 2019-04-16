@@ -12,6 +12,7 @@ namespace Mocky.Emiters
         private ModuleBuilder mb;
         private TypeBuilder tb;
         private ConstructorBuilder cb;
+        private FieldBuilder callReturnValue;
         Type type;
 
         public SimpleEmiter(Type type, string assemblyName) {
@@ -46,11 +47,6 @@ namespace Mocky.Emiters
             //il.Emit(OpCodes.Ldarg_0);
             //il.Emit(OpCodes.Call, ci);
             //il.Emit(OpCodes.Ret);
-
-            //   IL_0000: ldarg.0
-            //   IL_0001: ldarg.1
-            //   IL_0002: call instance void Mocky.helpers.MocksBase::.ctor(class Mocky.MockMethod[])
-            //  IL_0007: nop
 
             il.Emit(OpCodes.Ldarg_0);
             il.Emit(OpCodes.Ldarg_1);
@@ -88,7 +84,7 @@ namespace Mocky.Emiters
 
                 foreach(MethodInfo mi in iMethods)
                 {
-                    CreateMethod(mi);       // implementa-os com throw NotImplementedException
+                    CreateMethod(mi);       
                 }
             }
         }
@@ -150,18 +146,17 @@ namespace Mocky.Emiters
             PushParameterArgumentsToObjectArray(il, mi);
 
             il.Emit(OpCodes.Call, typeof(helpers.MocksBase).GetMethod("InvokeMethod"));
-            il.Emit(OpCodes.Stloc_0);
-            il.Emit(OpCodes.Ldloc_0);
+
+
+            callReturnValue = tb.DefineField("res", retType, FieldAttributes.Private);
+
+            il.Emit(OpCodes.Stloc, callReturnValue);
+            il.Emit(OpCodes.Ldloc, callReturnValue);
             il.Emit(OpCodes.Ret);
         }
 
         private void PushParameterArgumentsToObjectArray(ILGenerator il, MethodInfo mi)
         {
-            //IL_000e: ldc.i4.0
-            //IL_000f: ldarg.1
-            //IL_0010: box[mscorlib]System.Int32
-            //IL_0015: stelem.ref
-
             ParameterInfo[] pi = mi.GetParameters();
 
             int numberOfParameters = mi.GetParameters().Length;

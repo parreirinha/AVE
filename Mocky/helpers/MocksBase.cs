@@ -16,12 +16,12 @@ namespace Mocky.helpers
             this.ms = ms;
         }
 
-        public int InvokeMethod(string methodName, params object[] args)
+        public object InvokeMethod(string methodName, params object[] args)
         {
             foreach(MockMethod mockMethod in ms)
             {
                 if (mockMethod.Method.Name == methodName)
-                    return (int) mockMethod.Call(args);
+                    return mockMethod.Call(args);
             }
             throw new NotImplementedException();
         }
