@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClimaTest.cs" />
+    <Compile Include="ICsvParser.cs" />
     <Compile Include="IWeatherWebApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -62,6 +63,9 @@
     <Compile Include="Part4_AttributeTest.cs" />
     <Compile Include="Part5.cs" />
     <Compile Include="ClimaTestMock.cs" />
+    <Compile Include="Part1_Mock.cs" />
+    <Compile Include="Part2_FieldsAndProperties_Mock.cs" />
+    <Compile Include="Part4_AttributeTest_Mock.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
