@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Emiters\CallCreatorBuilder.cs" />
     <Compile Include="Emiters\MethodBuilderTest.cs" />
     <Compile Include="Emiters\SimpleEmiter.cs" />
     <Compile Include="helpers\MocksBase.cs" />
