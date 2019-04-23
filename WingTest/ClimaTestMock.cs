@@ -4,6 +4,7 @@ using System.Net;
 using Clima;
 using System.Collections.Generic;
 using Mocky;
+using Request;
 
 namespace Csvier.Test
 {
@@ -91,5 +92,27 @@ namespace Csvier.Test
         }
 
 
+        [TestMethod]
+        public void TestLoadSearchOportoOnRequestMock()
+        {
+            Mocker mocker = new Mocker(typeof(IHttpRequest));
+
+            mocker
+                .When("GetBody")
+                .With("www.somerequest.com")
+                .Return("response");
+
+            mocker
+                .When("GetBody")
+                .With("www.anotherrequest.com")
+                .Return("anotherresponse");
+
+            IHttpRequest req = (IHttpRequest)mocker.Create();
+
+            Assert.AreEqual(req.GetBody("www.somerequest.com"), "response");
+            Assert.AreEqual(req.GetBody("www.anotherrequest.com"), "anotherresponse");
+            Assert.AreEqual(req.GetBody("www.notDifinedRequest.com"), 0); ;
+
+        }
     }
 }
