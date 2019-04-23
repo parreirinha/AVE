@@ -64,7 +64,6 @@
     <Compile Include="Part5.cs" />
     <Compile Include="ClimaTestMock.cs" />
     <Compile Include="Part1_Mock.cs" />
-    <Compile Include="Part2_FieldsAndProperties_Mock.cs" />
     <Compile Include="Part4_AttributeTest_Mock.cs" />
   </ItemGroup>
   <ItemGroup>
