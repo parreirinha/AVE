@@ -13,20 +13,20 @@ using System.Threading.Tasks;
 
 namespace Csvier
 {
-    class ParserHandler
+    class ParserHandler<T>
     {
         private Type type;
-        CtorManager ctorManager;
+        CtorManager<T> ctorManager;
         Dictionary<string, IParserWrapper> parsers; // IParserWrapper => CsvBasicInfo + IReflect object
         PropertyInfo[] pi;
         FieldInfo[] fi;
         ConstructorInfo[] ci;
         readonly char separator;
 
-        public ParserHandler(Type type, char separator)
+        public ParserHandler(char separator)
         {
-            this.type = type;
-            ctorManager = new CtorManager(type, separator);
+            this.type = typeof(T);
+            ctorManager = new CtorManager<T>(separator);
             parsers = new Dictionary<string, IParserWrapper>();
             pi = type.GetProperties();
             fi = type.GetFields();
@@ -115,7 +115,7 @@ namespace Csvier
             }
         }
 
-        public object[] GetObjects(string[] data)
+        public IEnumerable<T> GetObjects(string[] data)
         {
             return ctorManager.CreateObjectArrayData(data); 
         }

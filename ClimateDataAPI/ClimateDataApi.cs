@@ -1,6 +1,7 @@
 ﻿using Csvier;
 using Request;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ClimateDataAPI
@@ -40,15 +41,15 @@ namespace ClimateDataAPI
 
             string body = req.GetBody(request);
 
-            CsvParser values =
-                new CsvParser(typeof(ClimateValues))
+            CsvParser<ClimateValues> values =
+                new CsvParser<ClimateValues>()
                     .CtorArg("gCM", 0)
                     .CtorArg("variableType", 1)
                     .CtorArg("jan", 4)
                     .CtorArg("feb", 5)
                     .CtorArg("mar", 6);
 
-            Object[] items = values
+            IEnumerable<ClimateValues> items = values
                     .Load(body)
                     .Remove(1)
                     .RemoveEmpties()

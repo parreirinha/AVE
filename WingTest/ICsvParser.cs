@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Csvier.Test
 {
-    public interface ICsvParser
+    public interface ICsvParser<T>
     {
 
-        CsvParser Load(String src);
+        CsvParser<T> Load(String src);
 
-        object[] Parse();
+        IEnumerable<T> Parse();
     }
 }

@@ -3,6 +3,8 @@ using Clima;
 using Csvier.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mocky;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Csvier.Test
 {
@@ -20,7 +22,7 @@ namespace Csvier.Test
                 "2019-01-03,24,16,60,7,11,89,E,113,http://cdn.worldweatheronline.net/images/wsymbols01_png_64/wsymbol_0001_sunny.png," + "Sunny,0.0,67,10,1026,3,13,55,7,45,12,54,11,18,12,54\n" +
                 "2019-01-04,24,16,60,9,15,78,ENE,116,http://cdn.worldweatheronline.net/images/wsymbols01_png_64/wsymbol_0002_sunny_intervals.png," + "Partly cloudy,0.1,73,10,1028,27,14,57,9,48,13,55,14,23,13,55";
 
-            Mocker mocker = new Mocker(typeof(ICsvParser));
+            Mocker mocker = new Mocker(typeof(ICsvParser<WeatherInfo>));
 
             mocker
                 .When("Parse")
@@ -37,9 +39,9 @@ namespace Csvier.Test
                 .With(sampleWeatherInLisbonFiltered)
                 .Return(null);
 
-            ICsvParser api = (ICsvParser)mocker.Create();
+            ICsvParser<WeatherInfo> api = (ICsvParser< WeatherInfo>)mocker.Create();
 
-            object[] items = api.Parse();
+            IEnumerable<WeatherInfo> items = api.Parse();
 
             DateTime[] dates = {
                 DateTime.Parse("2019-01-01"),
@@ -48,17 +50,26 @@ namespace Csvier.Test
                 DateTime.Parse("2019-01-04")
             };
 
-            Assert.AreEqual(4, items.Length);
+            int[] temps = new int[] { 17, 18, 16, 16 };
+            int idx = 0;
 
-            Assert.AreEqual(17, ((WeatherInfo)items[0]).TempC);
-            Assert.AreEqual(18, ((WeatherInfo)items[1]).TempC);
-            Assert.AreEqual(16, ((WeatherInfo)items[2]).TempC);
-            Assert.AreEqual(16, ((WeatherInfo)items[3]).TempC);
+            foreach(WeatherInfo wi in items)
+            {
+                Assert.AreEqual(temps[idx], wi.TempC);
+                Assert.AreEqual(dates[idx++], wi.Date);
+            }
 
-            Assert.AreEqual(dates[0], ((WeatherInfo)items[0]).Date);
-            Assert.AreEqual(dates[1], ((WeatherInfo)items[1]).Date);
-            Assert.AreEqual(dates[2], ((WeatherInfo)items[2]).Date);
-            Assert.AreEqual(dates[3], ((WeatherInfo)items[3]).Date);
+            Assert.AreEqual(4, items.Count());
+
+            //Assert.AreEqual(17, ((WeatherInfo)items[0]).TempC);
+            //Assert.AreEqual(18, ((WeatherInfo)items[1]).TempC);
+            //Assert.AreEqual(16, ((WeatherInfo)items[2]).TempC);
+            //Assert.AreEqual(16, ((WeatherInfo)items[3]).TempC);
+
+            //Assert.AreEqual(dates[0], ((WeatherInfo)items[0]).Date);
+            //Assert.AreEqual(dates[1], ((WeatherInfo)items[1]).Date);
+            //Assert.AreEqual(dates[2], ((WeatherInfo)items[2]).Date);
+            //Assert.AreEqual(dates[3], ((WeatherInfo)items[3]).Date);
         }
 
     }

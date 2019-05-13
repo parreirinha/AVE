@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Clima;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Csvier.Test
 {
@@ -24,13 +26,13 @@ namespace Csvier.Test
         public void ParseWeatherInfo()
         {
 
-            CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
+            CsvParser<WeatherInfo> pastWeather = new CsvParser<WeatherInfo>()
                             .CtorArg("date", 0)
                             .CtorArg("tempC", 2)
                             .PropArg("PrecipMM", 11)
                             .PropArg("Desc", 10);
 
-            object[] items = pastWeather
+            IEnumerable<WeatherInfo> items = pastWeather
                                 .Load(sample1)
                                 .Parse();
 
@@ -41,31 +43,45 @@ namespace Csvier.Test
                 DateTime.Parse("2019-01-04")
             };
 
-            Assert.AreEqual(4, items.Length);
+            int[] temps = new int[] { 17, 18, 16, 16 };
+            double[] prec = new double[] { 0.0, 0.0, 0.0, 0.1 };
+            string[] desc = new string[] { "Partly cloudy", "Partly cloudy", "Sunny", "Partly cloudy" };
 
-            //date
-            Assert.AreEqual(17, ((WeatherInfo)items[0]).TempC);
-            Assert.AreEqual(18, ((WeatherInfo)items[1]).TempC);
-            Assert.AreEqual(16, ((WeatherInfo)items[2]).TempC);
-            Assert.AreEqual(16, ((WeatherInfo)items[3]).TempC);
+            Assert.AreEqual(4, items.Count());
 
-            //tempC
-            Assert.AreEqual(dates[0], ((WeatherInfo)items[0]).Date);
-            Assert.AreEqual(dates[1], ((WeatherInfo)items[1]).Date);
-            Assert.AreEqual(dates[2], ((WeatherInfo)items[2]).Date);
-            Assert.AreEqual(dates[3], ((WeatherInfo)items[3]).Date);
+            int idx = 0;
 
-            //PrecipMM
-            Assert.AreEqual(0.0, ((WeatherInfo)items[0]).PrecipMM);
-            Assert.AreEqual(0.0, ((WeatherInfo)items[1]).PrecipMM);
-            Assert.AreEqual(0.0, ((WeatherInfo)items[2]).PrecipMM);
-            Assert.AreEqual(0.1, ((WeatherInfo)items[3]).PrecipMM);
+            foreach(WeatherInfo wi in items)
+            {
+                Assert.AreEqual(temps[idx], wi.TempC);
+                Assert.AreEqual(dates[idx], wi.Date);
+                Assert.AreEqual(prec[idx], wi.PrecipMM);
+                Assert.AreEqual(desc[idx++], wi.Desc);
+            }
 
-            //Desc
-            Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[0]).Desc);
-            Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[1]).Desc);
-            Assert.AreEqual("Sunny", ((WeatherInfo)items[2]).Desc);
-            Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[3]).Desc);
+            ////date
+            //Assert.AreEqual(17, ((WeatherInfo)items[0]).TempC);
+            //Assert.AreEqual(18, ((WeatherInfo)items[1]).TempC);
+            //Assert.AreEqual(16, ((WeatherInfo)items[2]).TempC);
+            //Assert.AreEqual(16, ((WeatherInfo)items[3]).TempC);
+
+            ////tempC
+            //Assert.AreEqual(dates[0], ((WeatherInfo)items[0]).Date);
+            //Assert.AreEqual(dates[1], ((WeatherInfo)items[1]).Date);
+            //Assert.AreEqual(dates[2], ((WeatherInfo)items[2]).Date);
+            //Assert.AreEqual(dates[3], ((WeatherInfo)items[3]).Date);
+
+            ////PrecipMM
+            //Assert.AreEqual(0.0, ((WeatherInfo)items[0]).PrecipMM);
+            //Assert.AreEqual(0.0, ((WeatherInfo)items[1]).PrecipMM);
+            //Assert.AreEqual(0.0, ((WeatherInfo)items[2]).PrecipMM);
+            //Assert.AreEqual(0.1, ((WeatherInfo)items[3]).PrecipMM);
+
+            ////Desc
+            //Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[0]).Desc);
+            //Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[1]).Desc);
+            //Assert.AreEqual("Sunny", ((WeatherInfo)items[2]).Desc);
+            //Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[3]).Desc);
 
         }
     }

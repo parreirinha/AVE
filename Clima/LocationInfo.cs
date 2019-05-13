@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace Clima
 {
 
-    [CtorArg(typeof(CsvParser), "country", 0)]
-    [CtorArg(typeof(CsvParser), "region", 2)]
-    [CtorArg(typeof(CsvParser), "latitude", 3)]
-    [CtorArg(typeof(CsvParser), "longitude", 4)]
+    [CtorArg(typeof(CsvParser<LocationInfo>), "country", 0)]
+    [CtorArg(typeof(CsvParser<LocationInfo>), "region", 2)]
+    [CtorArg(typeof(CsvParser<LocationInfo>), "latitude", 3)]
+    [CtorArg(typeof(CsvParser<LocationInfo>), "longitude", 4)]
     public class LocationInfo
     {
         public String Country { get; set; }

@@ -7,81 +7,85 @@ using System.Reflection;
 namespace Csvier
 {
 
-    public class CsvParser
+    public class CsvParser<T>
     {
         private Type type;
         private char separator;
-        private ParserHandler parser;
+        private ParserHandler<T> parser;
         private string[] data;
 
-        public CsvParser(Type klass, char separator)
+        public CsvParser(char separator)
         {
-            type = klass;
+            type = typeof(T);
             this.separator = separator;
-            parser = new ParserHandler(type, separator);
+            parser = new ParserHandler<T>(separator);
         }
-        public CsvParser(Type klass) : this(klass, ',')
+        public CsvParser() : this(',')
         {
         }
 
-        public CsvParser CtorArg(string arg, int col)
+        public CsvParser<T> CtorArg(string arg, int col)
         {
             parser.AddCtorParam(arg, col);
             return this;
         }
 
-        public CsvParser PropArg(string arg, int col)
+        public CsvParser<T> PropArg(string arg, int col)
         {
             parser.AddProp(arg, col);
             return this;
         }
 
-        public CsvParser FieldArg(string arg, int col)
+        public CsvParser<T> FieldArg(string arg, int col)
         {
             parser.AddField(arg, col);
             return this;
         }
 
-        public CsvParser Load(String src)
+        public CsvParser<T> Load(String src)
         {
             string[] arr = src.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             data = arr;
             return this;
         }
 
-        public CsvParser Remove(int count)
+        public CsvParser<T> Remove(int count)
         {
             data = data.Skip(count).ToArray();
             return this;
         }
 
-        public CsvParser RemoveEmpties()
+        public CsvParser<T> RemoveEmpties()
         {
             data = data.Where(item => item != "").ToArray();
             return this;
         }
         
-        public CsvParser RemoveWith(string word)
+        public CsvParser<T> RemoveWith(string word)
         {
             data = data.Where(item => !item.Contains(word)).ToArray();
             return this;
         }
-        public CsvParser RemoveEvenIndexes()
+        public CsvParser<T> RemoveEvenIndexes()
         {
             data = data.Where((item, index) => index % 2 == 0).ToArray();
             return this;
         }
-        public CsvParser RemoveOddIndexes()
+        public CsvParser<T> RemoveOddIndexes()
         {
             data = data.Where((item, index) => index % 2 != 0).ToArray();
             return this;
         }
-        public object[] Parse()
+        public IEnumerable<T> Parse()
         {
-            object[] weathers= parser.GetObjects(data);     // creates objects
+            IEnumerable<T> weathers = parser.GetObjects(data);     // creates objects
 
-            for (int i = 0; i < weathers.Length; i++)
-                parser.SetFieldAndPropertiesValues(weathers[i], data[i]);   // set properties and fields values
+            //for (int i = 0; i < weathers.Length; i++)
+            //    parser.SetFieldAndPropertiesValues(weathers[i], data[i]);   // set properties and fields values
+
+            int idx = 0;
+            foreach(T elem in weathers)
+                parser.SetFieldAndPropertiesValues(elem, data[idx++]);
 
             return weathers;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,9 @@ namespace Csvier.Abstract
      * */
     public interface ICsvAttr
     {
-        void InvokeMethodForCorrespondence(CsvParser parser);
+        string Name { get; set; }
+        int Column { get; set; }
+        MethodInfo mi { get; set; }
+        //void InvokeMethodForCorrespondence(CsvParser<T> parser);
     }
 }

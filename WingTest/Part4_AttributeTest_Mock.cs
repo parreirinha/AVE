@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Clima;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mocky;
 using Request;
+using System.Linq;
 
 namespace Csvier.Test
 {
@@ -36,85 +38,11 @@ namespace Csvier.Test
         }
 
 
-        //[TestMethod]
-        //public void WeatherInfoCustomAttribute_Mock()
-        //{
-
-        //    //CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
-        //    //    .CtorArg("date", 0)
-        //    //    .CtorArg("tempC", 2)
-        //    //    .PropArg("PrecipMM", 11)
-        //    //    .PropArg("Desc", 10);
-
-        //    Mocker mocker = new Mocker(typeof(ICsvParser));
-
-        //    mocker
-        //        .When("Parse")
-        //        .With()
-        //        .Return(new object[] {
-        //            new WeatherInfo(new DateTime(2019, 1, 1), 17),
-        //            new WeatherInfo(new DateTime(2019, 1, 2), 18),
-        //            new WeatherInfo(new DateTime(2019, 1, 3), 16),
-        //            new WeatherInfo(new DateTime(2019, 1, 4), 16)
-        //        });
-
-        //    mocker
-        //        .When("Load")
-        //        .With(sample1)
-        //        .Return(null);
-
-        //    ICsvParser api = (ICsvParser)mocker.Create();
-
-        //    CsvCorrespondenceAttr.MakeAttributeCorrespondence(api, typeof(ICsvParser)); // this makes the correspondence between ctorArgs, fieldArgs and paramArgs
-
-        //    object[] items = api
-        //                        .Load(sample1)
-        //                        .Parse();
-
-
-
-
-
-        //    DateTime[] dates = {
-        //        DateTime.Parse("2019-01-01"),
-        //        DateTime.Parse("2019-01-02"),
-        //        DateTime.Parse("2019-01-03"),
-        //        DateTime.Parse("2019-01-04")
-        //    };
-
-        //    Assert.AreEqual(4, items.Length);
-
-        //    //date
-        //    Assert.AreEqual(17, ((WeatherInfo)items[0]).TempC);
-        //    Assert.AreEqual(18, ((WeatherInfo)items[1]).TempC);
-        //    Assert.AreEqual(16, ((WeatherInfo)items[2]).TempC);
-        //    Assert.AreEqual(16, ((WeatherInfo)items[3]).TempC);
-
-        //    //tempC
-        //    Assert.AreEqual(dates[0], ((WeatherInfo)items[0]).Date);
-        //    Assert.AreEqual(dates[1], ((WeatherInfo)items[1]).Date);
-        //    Assert.AreEqual(dates[2], ((WeatherInfo)items[2]).Date);
-        //    Assert.AreEqual(dates[3], ((WeatherInfo)items[3]).Date);
-
-        //    //PrecipMM
-        //    Assert.AreEqual(0.0, ((WeatherInfo)items[0]).PrecipMM);
-        //    Assert.AreEqual(0.0, ((WeatherInfo)items[1]).PrecipMM);
-        //    Assert.AreEqual(0.0, ((WeatherInfo)items[2]).PrecipMM);
-        //    Assert.AreEqual(0.1, ((WeatherInfo)items[3]).PrecipMM);
-
-        //    //Desc
-        //    Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[0]).Desc);
-        //    Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[1]).Desc);
-        //    Assert.AreEqual("Sunny", ((WeatherInfo)items[2]).Desc);
-        //    Assert.AreEqual("Partly cloudy", ((WeatherInfo)items[3]).Desc);
-
-        //}
-
 
         [TestMethod]
         public void LocationInfoCustomAttribute()
         {
-            const string WEATHER_KEY = "72dbd0b57ebb460c861120116191303";
+            const string WEATHER_KEY = "1368ef2d6f8a41d19a4171602191205";
             const string WEATHER_HOST = "http://api.worldweatheronline.com/premium/v1/";
             const string SEARCH = WEATHER_HOST + "search.ashx?query={0}&format=tab&key=" + WEATHER_KEY;
             req = new HttpRequest();
@@ -123,20 +51,17 @@ namespace Csvier.Test
 
             string body = req.GetBody(path);
 
-            CsvParser location = new CsvParser(typeof(LocationInfo), '\t');
+            CsvParser<LocationInfo> location = new CsvParser<LocationInfo>('\t');
 
-            CsvCorrespondenceAttr.MakeAttributeCorrespondence(location, typeof(LocationInfo)); // this makes the correspondence between ctorArgs, fieldArgs and paramArgs
+            CsvCorrespondenceAttr<LocationInfo>.MakeAttributeCorrespondence(location, typeof(LocationInfo)); // this makes the correspondence between ctorArgs, fieldArgs and paramArgs
 
-            object[] locationInfo = location
+            IEnumerable<LocationInfo> locationInfo = location
                     .Load(body)
                     .Remove(4)
                     .RemoveEmpties()
                     .Parse();
 
-            Assert.AreEqual(6, locationInfo.Length);
+            Assert.AreEqual(6, locationInfo.Count());
         }
-
-
-
     }
 }

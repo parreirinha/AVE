@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Clima;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Csvier.Test
 {
@@ -50,86 +52,86 @@ namespace Csvier.Test
         [TestMethod]
         public void RemoveOddIndexes()
         {
-            CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
+            CsvParser<WeatherInfo> pastWeather = new CsvParser<WeatherInfo>()
                 .CtorArg("date", 0)
                 .CtorArg("tempC", 2);
 
-            object[] items = pastWeather
+            IEnumerable<WeatherInfo> items = pastWeather
                             .Load(sample1)
                             .RemoveOddIndexes()
                             .Parse();
-
-            Assert.AreEqual(18, ((WeatherInfo)items[0]).TempC);
-            Assert.AreEqual(16, ((WeatherInfo)items[1]).TempC);
-
-            Assert.AreEqual(2, items.Length);
+            int[] temps = new int[] { 18, 16 };
+            int idx = 0;
+            foreach(WeatherInfo wi in items)
+                Assert.AreEqual(temps[idx++], wi.TempC);
+            Assert.AreEqual(2, items.Count());
         }
 
 
         [TestMethod]
         public void RemoveEvenIndexes()
         {
-            CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
+            CsvParser<WeatherInfo> pastWeather = new CsvParser<WeatherInfo>()
                 .CtorArg("date", 0)
                 .CtorArg("tempC", 2);
 
-            object[] items = pastWeather
+            IEnumerable<WeatherInfo> items = pastWeather
                             .Load(sample1)
                             .RemoveEvenIndexes()
                             .Parse();
 
-            Assert.AreEqual(17, ((WeatherInfo)items[0]).TempC);
-            Assert.AreEqual(16, ((WeatherInfo)items[1]).TempC);
+            int[] temps = new int[] { 17, 16 };
+            int idx = 0;
+            foreach (WeatherInfo wi in items)
+                Assert.AreEqual(temps[idx++], wi.TempC);
+            Assert.AreEqual(2, items.Count());
 
-            Assert.AreEqual(2, items.Length);
         }
 
         [TestMethod]
         public void RemoveWith()
         {
-            CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
+            CsvParser<WeatherInfo> pastWeather = new CsvParser<WeatherInfo>()
                 .CtorArg("date", 0)
                 .CtorArg("tempC", 2);
 
-            object[] items = pastWeather
+            IEnumerable<WeatherInfo> items = pastWeather
                             .Load(sample3)
                             .RemoveWith("Not Available")
                             .Parse();
 
-            Assert.AreEqual(4, items.Length);
+            Assert.AreEqual(4, items.Count());
         }
 
         [TestMethod]
         public void Remove()
         {
-            CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
+            CsvParser<WeatherInfo> pastWeather = new CsvParser<WeatherInfo>()
                 .CtorArg("date", 0)
                 .CtorArg("tempC", 2);
 
-            object[] items = pastWeather
+            IEnumerable<WeatherInfo> items = pastWeather
                             .Load(sample2)
                             .Remove(8)
                             .Parse();
 
-            Assert.AreEqual(4, items.Length);
+            Assert.AreEqual(4, items.Count());
         }
 
         [TestMethod]
         public void RemoveEmpties()
         {
-            CsvParser pastWeather = new CsvParser(typeof(WeatherInfo))
+            CsvParser<WeatherInfo> pastWeather = new CsvParser<WeatherInfo>()
                 .CtorArg("date", 0)
                 .CtorArg("tempC", 2);
 
-            object[] items = pastWeather
+            IEnumerable<WeatherInfo> items = pastWeather
                             .Load(sample4)
                             .RemoveEmpties()
                             .Parse();
 
-            Assert.AreEqual(4, items.Length);
+            Assert.AreEqual(4, items.Count());
         }
-
-
 
     }
 }

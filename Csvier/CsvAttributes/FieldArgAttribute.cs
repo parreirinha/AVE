@@ -11,9 +11,10 @@ namespace Csvier.CsvAttributes
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     public class FieldArgAttribute : Attribute, ICsvAttr
     {
-        private string Name { get; set; }
-        private int Column { get; set; }
-        private MethodInfo mi;
+        public string Name { get; set; }
+        public int Column { get; set; }
+        public MethodInfo mi { get; set; }
+
         private Type type;
 
         public FieldArgAttribute(Type type, string name, int col)
@@ -24,11 +25,11 @@ namespace Csvier.CsvAttributes
             mi = type.GetMethod("FieldArg", new Type[] { typeof(string), typeof(int) });
         }
 
-        // Invokes method FieldArgs of CsvParser with the parameters name and col of constructor
-        public void InvokeMethodForCorrespondence(CsvParser parser)
-        {
-            object[] parameters = new object[] { Name, Column };
-            mi.Invoke(parser, parameters);
-        }
+        //// Invokes method FieldArgs of CsvParser with the parameters name and col of constructor
+        //public void InvokeMethodForCorrespondence(CsvParser<T> parser)
+        //{
+        //    object[] parameters = new object[] { Name, Column };
+        //    mi.Invoke(parser, parameters);
+        //}
     }
 }

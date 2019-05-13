@@ -5,19 +5,20 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Csvier
 {
-    class CtorManager
+    class CtorManager<T>
     {
         private Type type;
         private Dictionary<String, int> ctorParams;
         private ConstructorInfo[] ci;
         private char separator;
 
-        public CtorManager(Type type, char separator)
+        public CtorManager(char separator)
         {
-            this.type = type;
+            this.type = typeof(T);
             this.separator = separator;
             ctorParams = new Dictionary<string, int>();
             ci = type.GetConstructors();
@@ -63,16 +64,17 @@ namespace Csvier
         /*
          * retorns the created objects
          * */
-        public object[] CreateObjectArrayData(string[] data)
+        public IEnumerable<T> CreateObjectArrayData(string[] data)
         {
             if (data == null || data.Length == 0)
                 throw new CtorException("there are no data to populate the object");
 
-            object[] res = new object[data.Length];
+            List<T> res = new List<T>();
 
             for(int i=0; i<data.Length; i++)
             {
-                res[i] = BuildInstance(data[i]);
+                //res[i] = BuildInstance(data[i]);
+                res.Add(BuildInstance(data[i]));
             }
             return res;
         }
@@ -81,12 +83,12 @@ namespace Csvier
          *  Build a new object from a single line
          *  data is a single line of the csv file
          ***/
-        private object BuildInstance(string data)
+        private T BuildInstance(string data)
         {
             string[] values = data.Split(separator);
 
             object[] parameters = GetParametersForCtor(values); 
-            object retValue = Activator.CreateInstance(type, parameters);
+            T retValue = (T)Activator.CreateInstance(type, parameters);
             return retValue;
         }
 
