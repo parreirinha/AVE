@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Clima;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using Csvier;
 
 namespace Csvier.Test
 {

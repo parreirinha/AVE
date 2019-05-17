@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using Mocky.Emiters;
+using System.Linq;
 
 namespace Mocky
 {
@@ -18,7 +19,22 @@ namespace Mocky
         public MockMethod(Type type, string name)
         {
             this.klass = type;
-            this.meth = type.GetMethod(name);
+            if(name.Equals("Parse"))
+            {
+                MethodInfo[] mi = type.GetMethods()
+                    .Where(elem => elem.Name == "Parse")
+                    .ToArray();
+
+                if (args == null)
+                    meth = mi[0];
+                else
+                    meth = mi[1];
+            }
+            else
+            {
+                this.meth = type.GetMethod(name);
+            }
+            
             if (meth == null)
                 throw new ArgumentException("There is no method " + name + " in type " + type);
             this.results = new Dictionary<object[], object>();

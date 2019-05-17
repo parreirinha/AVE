@@ -76,18 +76,29 @@ namespace Csvier
             data = data.Where((item, index) => index % 2 != 0).ToArray();
             return this;
         }
-        public IEnumerable<T> Parse()
+        public T[] Parse()
         {
             IEnumerable<T> weathers = parser.GetObjects(data);     // creates objects
-
-            //for (int i = 0; i < weathers.Length; i++)
-            //    parser.SetFieldAndPropertiesValues(weathers[i], data[i]);   // set properties and fields values
 
             int idx = 0;
             foreach(T elem in weathers)
                 parser.SetFieldAndPropertiesValues(elem, data[idx++]);
 
-            return weathers;
+            return weathers.ToArray();
+        }
+
+        public T[] Parse(Func<string, T> parser)
+        {
+            List<T> aux = new List<T>();
+            T currObj;
+
+            foreach(string line in data)
+            {
+                currObj = parser(line);
+                aux.Add(currObj);
+            }
+
+            return aux.ToArray();
         }
     }
 }
