@@ -1,4 +1,5 @@
 ﻿using Csvier.CsvAttributes;
+using Csvier.Enumerables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,13 @@ namespace Csvier
         private char separator;
         private ParserHandler<T> parser;
         private string[] data;
+        private StringDataLineEnumerator strDataLineEnumerable;
 
         public CsvParser(char separator)
         {
             type = typeof(T);
             this.separator = separator;
-            parser = new ParserHandler<T>(separator);
+            parser = new ParserHandler<T>(separator);            
         }
         public CsvParser() : this(',')
         {
@@ -47,6 +49,12 @@ namespace Csvier
             string[] arr = src.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             data = arr;
             return this;
+        }
+
+        public void Load_Enumerable(String src, EnumeratorOptions options)
+        {
+
+            strDataLineEnumerable = new StringDataLineEnumerator(src.GetEnumerator(), options);
         }
 
         public CsvParser<T> Remove(int count)
@@ -99,6 +107,11 @@ namespace Csvier
             }
 
             return aux.ToArray();
+        }
+
+        public IEnumerable<T> ToEnumerable(Func<string, T> parser)
+        {            
+            throw new NotImplementedException();
         }
     }
 }

@@ -49,6 +49,9 @@
     <Compile Include="CsvAttributes\CsvCorrespondenceAttr.cs" />
     <Compile Include="CsvParser.cs" />
     <Compile Include="CtorManager.cs" />
+    <Compile Include="Enumerables\EnumeratorOptions.cs" />
+    <Compile Include="Enumerables\StringDataLineEnumerable.cs" />
+    <Compile Include="Enumerables\StringDataLineEnumerator.cs" />
     <Compile Include="Exceptions\CtorException.cs" />
     <Compile Include="Exceptions\FieldException.cs" />
     <Compile Include="Exceptions\PropertyException.cs" />
