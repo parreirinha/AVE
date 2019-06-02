@@ -11,21 +11,28 @@ namespace Csvier.Enumerables
     {
 
         string src;
+        EnumeratorOptions options;
 
 
-        public StringDataLineEnumerable(string src)
+        public StringDataLineEnumerable(string src, EnumeratorOptions options)
         {
             this.src = src;
+            this.options = options;
         }
 
-        public IEnumerator<char> GetEnumerator()  //generica
-        {
-            return src.GetEnumerator();
-        }
+        //public IEnumerator<char> GetEnumerator()  //generica
+        //{
+        //    return src.GetEnumerator();
+        //}
 
         IEnumerator IEnumerable.GetEnumerator() //chama generico
         {
             return GetEnumerator();
+        }
+
+        public StringDataLineEnumerator GetEnumerator()
+        {
+            return new StringDataLineEnumerator(src.GetEnumerator(), options);
         }
     }
 

@@ -14,7 +14,7 @@ namespace Csvier
         private char separator;
         private ParserHandler<T> parser;
         private string[] data;
-        private StringDataLineEnumerator strDataLineEnumerable;
+        private StringDataLineEnumerable strDataLineEnumerable;
 
         public CsvParser(char separator)
         {
@@ -51,10 +51,11 @@ namespace Csvier
             return this;
         }
 
-        public void Load_Enumerable(String src, EnumeratorOptions options)
+        public CsvParser<T> Load_Enumerable(String src, EnumeratorOptions options)
         {
 
-            strDataLineEnumerable = new StringDataLineEnumerator(src.GetEnumerator(), options);
+            strDataLineEnumerable = new StringDataLineEnumerable(src, options);
+            return this;
         }
 
         public CsvParser<T> Remove(int count)
@@ -110,8 +111,12 @@ namespace Csvier
         }
 
         public IEnumerable<T> ToEnumerable(Func<string, T> parser)
-        {            
-            throw new NotImplementedException();
+        {    
+            
+            foreach(string s in strDataLineEnumerable)
+            {
+                yield return parser(s);
+            }
         }
     }
 }

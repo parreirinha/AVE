@@ -67,6 +67,7 @@
     <Compile Include="Part1_Mock.cs" />
     <Compile Include="Part4_AttributeTest_Mock.cs" />
     <Compile Include="FunctionTests.cs" />
+    <Compile Include="ToEnumerableTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
